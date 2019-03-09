@@ -6,7 +6,4 @@
     <string name="btn_link_to_register">Not a member? Get registered in Firebase now!</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
-    <string name="email">Email</string>
-    <string name="action_sign_in_short">Register</string>
-    <string name="btn_link_to_login">Already registered. Login Me!</string>
 </resources>

@@ -1,23 +1,45 @@
 package com.example.gymguide;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.Exclude;
 
 import java.util.List;
 
-public class WorkoutHistory {
+public class WorkoutHistory extends Fragment {
     String historyID;
     Timestamp workoutDate;
     List<String> exerciseID;
     String userID;
 
-    public WorkoutHistory() {};
+    public WorkoutHistory() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_history, container, false);
+    }
 
     public WorkoutHistory(String historyID, Timestamp workoutDate, List<String> exerciseID, String userID) {
         this.historyID = historyID;
         this.workoutDate = workoutDate;
         this.exerciseID = exerciseID;
         this.userID = userID;
+
+        // FIXME send to database
     }
 
     @Exclude
@@ -27,6 +49,7 @@ public class WorkoutHistory {
 
     public void setHistoryID(String historyID) {
         this.historyID = historyID;
+        // FIXME update database
     }
 
     public Timestamp getWorkoutDate() {
@@ -35,6 +58,7 @@ public class WorkoutHistory {
 
     public void setWorkoutDate(Timestamp workoutDate) {
         this.workoutDate = workoutDate;
+        // FIXME update database
     }
 
     public List<String> getExerciseID() {
@@ -43,6 +67,7 @@ public class WorkoutHistory {
 
     public void setExerciseID(List<String> exerciseID) {
         this.exerciseID = exerciseID;
+        // FIXME update database
     }
 
     public String getUserID() {
@@ -51,5 +76,6 @@ public class WorkoutHistory {
 
     public void setUserID(String userID) {
         this.userID = userID;
+        // FIXME update database
     }
 }
