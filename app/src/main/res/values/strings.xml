@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Gym Guide</string>
     <string name="btn_forgot_password">Forgot your password?</string>
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_login">LOGIN</string>

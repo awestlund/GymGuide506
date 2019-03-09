@@ -13,9 +13,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.List;
 
 import com.example.gymguide.R;
 
@@ -47,9 +44,8 @@ public class CreateAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // set username and password to the editText values
-                final String username = usernameText.getText().toString().trim(); // this is email
+                String username = usernameText.getText().toString().trim();
                 final String password = passwordText.getText().toString().trim();
-                final String name = nameText.getText().toString().trim();
 
                 // make sure all relevant fields are populated
                 if (!validateInput()) {
@@ -60,7 +56,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            User user = new User(firebaseAuth.getCurrentUser().getUid(), name, username, "", "", "", null );
                             Intent intent = new Intent(CreateAccountActivity.this, HomeActivity.class);
                             startActivity(intent);
                         }
