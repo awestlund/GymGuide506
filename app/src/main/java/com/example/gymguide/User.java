@@ -1,7 +1,16 @@
 package com.example.gymguide;
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class User {
     String userID;
@@ -12,7 +21,8 @@ public class User {
     String userProfilePictureURL;
     List<String> workoutCategory;
 
-    public User(){};
+    // Access a Cloud Firestore instance from your Activity
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public User(String userID, String userName, String userEmail, String userWorkoutGoal, String workoutDifficulty, String userProfilePictureURL, List<String> workoutCategory) {
         this.userID = userID;
@@ -22,6 +32,9 @@ public class User {
         this.workoutDifficulty = workoutDifficulty;
         this.userProfilePictureURL = userProfilePictureURL;
         this.workoutCategory = workoutCategory;
+
+        // FIXME send user to database
+
     }
 
     public String getUserID() {
@@ -30,6 +43,7 @@ public class User {
 
     public void setUserID(String userID) {
         this.userID = userID;
+        //update database
     }
 
     public String getUserName() {
@@ -38,6 +52,7 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+        // FIXME update database
     }
 
     public String getUserEmail() {
@@ -46,6 +61,7 @@ public class User {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+        // FIXME update database
     }
 
     public String getUserWorkoutGoal() {
@@ -54,6 +70,7 @@ public class User {
 
     public void setUserWorkoutGoal(String userWorkoutGoal) {
         this.userWorkoutGoal = userWorkoutGoal;
+        // FIXME update database
     }
 
     public String getWorkoutDifficulty() {
@@ -62,6 +79,7 @@ public class User {
 
     public void setWorkoutDifficulty(String workoutDifficulty) {
         this.workoutDifficulty = workoutDifficulty;
+        // FIXME update database
     }
 
     public String getUserProfilePictureURL() {
@@ -70,6 +88,7 @@ public class User {
 
     public void setUserProfilePictureURL(String userProfilePictureURL) {
         this.userProfilePictureURL = userProfilePictureURL;
+        // FIXME update database
     }
 
     public List<String> getWorkoutCategory() {
@@ -78,5 +97,6 @@ public class User {
 
     public void setWorkoutCategory(List<String> workoutCategory) {
         this.workoutCategory = workoutCategory;
+        // FIXME update database
     }
 }

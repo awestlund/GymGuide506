@@ -18,6 +18,8 @@ public class WorkoutHistory {
         this.workoutDate = workoutDate;
         this.exerciseID = exerciseID;
         this.userID = userID;
+
+        // FIXME send to database
     }
 
     @Exclude
@@ -27,6 +29,7 @@ public class WorkoutHistory {
 
     public void setHistoryID(String historyID) {
         this.historyID = historyID;
+        // FIXME update database
     }
 
     public Timestamp getWorkoutDate() {
@@ -35,6 +38,7 @@ public class WorkoutHistory {
 
     public void setWorkoutDate(Timestamp workoutDate) {
         this.workoutDate = workoutDate;
+        // FIXME update database
     }
 
     public List<String> getExerciseID() {
@@ -43,6 +47,7 @@ public class WorkoutHistory {
 
     public void setExerciseID(List<String> exerciseID) {
         this.exerciseID = exerciseID;
+        // FIXME update database
     }
 
     public String getUserID() {
@@ -51,5 +56,6 @@ public class WorkoutHistory {
 
     public void setUserID(String userID) {
         this.userID = userID;
+        // FIXME update database
     }
 }
