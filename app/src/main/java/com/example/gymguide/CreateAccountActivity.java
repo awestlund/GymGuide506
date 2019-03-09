@@ -58,7 +58,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else if (password.length() < 6) {
-                            Toast.makeText(CreateAccountActivity.this, "Password must 6 or more characters", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateAccountActivity.this, "Password must 6 or more characters.", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             Toast.makeText(CreateAccountActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
@@ -76,7 +76,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         String password = passwordText.getText().toString().trim();
         String name = nameText.getText().toString().trim();
         if ((username.isEmpty()) || (password.isEmpty()) || (name.isEmpty())) {
-            Toast.makeText(CreateAccountActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateAccountActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
