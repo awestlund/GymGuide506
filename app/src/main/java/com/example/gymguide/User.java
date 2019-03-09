@@ -1,26 +1,35 @@
 package com.example.gymguide;
 import com.google.firebase.firestore.Exclude;
 
+import java.util.List;
+
 public class User {
     String userID;
-
     String userName;
-    String email;
-    String workoutGoal;
-    Integer difficulty;
-    String profilePictureURL;
-    String[] category;
+    String userEmail;
+    String userWorkoutGoal;
+    String workoutDifficulty;
+    String userProfilePictureURL;
+    List<String> workoutCategory;
 
     public User(){};
 
-    public User(String userID, String email, String workoutGoal, Integer difficulty, String profilePictureURL, String userName, String[] category) {
+    public User(String userID, String userName, String userEmail, String userWorkoutGoal, String workoutDifficulty, String userProfilePictureURL, List<String> workoutCategory) {
         this.userID = userID;
         this.userName = userName;
-        this.email = email;
-        this.workoutGoal = workoutGoal;
-        this.difficulty = difficulty;
-        this.profilePictureURL = profilePictureURL;
-        this.category = category;
+        this.userEmail = userEmail;
+        this.userWorkoutGoal = userWorkoutGoal;
+        this.workoutDifficulty = workoutDifficulty;
+        this.userProfilePictureURL = userProfilePictureURL;
+        this.workoutCategory = workoutCategory;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getUserName() {
@@ -31,52 +40,43 @@ public class User {
         this.userName = userName;
     }
 
-    @Exclude
-    public String getUserID() {
-        return userID;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserWorkoutGoal() {
+        return userWorkoutGoal;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserWorkoutGoal(String userWorkoutGoal) {
+        this.userWorkoutGoal = userWorkoutGoal;
     }
 
-    public String getWorkoutGoal() {
-        return workoutGoal;
+    public String getWorkoutDifficulty() {
+        return workoutDifficulty;
     }
 
-    public void setWorkoutGoal(String workoutGoal) {
-        this.workoutGoal = workoutGoal;
+    public void setWorkoutDifficulty(String workoutDifficulty) {
+        this.workoutDifficulty = workoutDifficulty;
     }
 
-    public Integer getDifficulty() {
-        return difficulty;
+    public String getUserProfilePictureURL() {
+        return userProfilePictureURL;
     }
 
-    public void setDifficulty(Integer difficulty) {
-        this.difficulty = difficulty;
+    public void setUserProfilePictureURL(String userProfilePictureURL) {
+        this.userProfilePictureURL = userProfilePictureURL;
     }
 
-    public String getProfilePictureURL() {
-        return profilePictureURL;
+    public List<String> getWorkoutCategory() {
+        return workoutCategory;
     }
 
-    public void setProfilePictureURL(String profilePictureURL) {
-        this.profilePictureURL = profilePictureURL;
-    }
-
-    public String[] getCategory() {
-        return category;
-    }
-
-    public void setCategory(String[] category) {
-        this.category = category;
+    public void setWorkoutCategory(List<String> workoutCategory) {
+        this.workoutCategory = workoutCategory;
     }
 }
