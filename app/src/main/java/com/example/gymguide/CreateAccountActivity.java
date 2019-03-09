@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.example.gymguide.R;
+
 public class CreateAccountActivity extends AppCompatActivity {
 
     private EditText passwordText, usernameText, nameText;
