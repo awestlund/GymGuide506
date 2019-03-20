@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,11 +25,14 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText passwordText, usernameText, nameText;
     private Button createAccBtn;
     private FirebaseAuth firebaseAuth;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        db = FirebaseFirestore.getInstance();
 
         passwordText = (EditText) findViewById(R.id.etPassword);
         usernameText = (EditText) findViewById(R.id.etEmail);
@@ -59,6 +65,22 @@ public class CreateAccountActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             User user = new User(firebaseAuth.getCurrentUser().getUid(), name, username, "", "", "", null );
+
+                            db.collection("users").document(user.getUserID())
+                                    .set(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("create account", "DocumentSnapshot successfully written!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("create account", "Error writing document", e);
+                                        }
+                                    });
+
                             Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
