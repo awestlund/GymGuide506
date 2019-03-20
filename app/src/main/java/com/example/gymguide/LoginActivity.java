@@ -42,11 +42,12 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         // if the current user isn't null redirect them to their home screen
-        if (user != null){
-            finish();
-            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
+        //FIXME commented out to test with login
+//        if (user != null){
+//            finish();
+//            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+//            startActivity(intent);
+//        }
 
         // try to login with info from usernameText and passwordText
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
                         else {
@@ -92,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // go to next activity as guest
                 firebaseAuth.signInAnonymously();
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

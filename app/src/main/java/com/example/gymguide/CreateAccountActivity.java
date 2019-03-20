@@ -59,7 +59,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             User user = new User(firebaseAuth.getCurrentUser().getUid(), name, username, "", "", "", null );
-                            Intent intent = new Intent(CreateAccountActivity.this, HomeActivity.class);
+                            Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
                         else if (password.length() < 6) {
