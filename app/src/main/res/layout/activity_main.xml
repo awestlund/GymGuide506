@@ -31,5 +31,12 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
+    <Button
+        android:id="@+id/btnQR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="QR Scan"/>
+
 </android.support.design.widget.CoordinatorLayout>
 
