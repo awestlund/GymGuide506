@@ -84,6 +84,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                         else if (password.length() < 6) {
                             Toast.makeText(CreateAccountActivity.this, "Password must 6 or more characters.", Toast.LENGTH_SHORT).show();
