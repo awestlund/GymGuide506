@@ -18,10 +18,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.gymguide.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
-    private EditText passwordText, usernameText, nameText;
+    private EditText passwordText, emailText, nameText;
     private Button createAccBtn;
     private FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
@@ -34,7 +35,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         passwordText = (EditText) findViewById(R.id.etPassword);
-        usernameText = (EditText) findViewById(R.id.etEmail);
+        emailText = (EditText) findViewById(R.id.etEmail);
         nameText =     (EditText) findViewById(R.id.etName);
         createAccBtn = (Button)findViewById(R.id.btnCreateAcc);
 
@@ -50,19 +51,21 @@ public class CreateAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // set username and password to the editText values
-                String username = usernameText.getText().toString().trim();
+                final String email = emailText.getText().toString().trim();
                 final String password = passwordText.getText().toString().trim();
+                final String name = nameText.getText().toString().trim();
+
 
                 // make sure all relevant fields are populated
                 if (!validateInput()) {
                     return;
                 }
                 // try to create a new user with the given credentials
-                firebaseAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            User user = new User(firebaseAuth.getCurrentUser().getUid(), name, username, "", "", "", null );
+                            User user = new User(firebaseAuth.getCurrentUser().getUid(), name, email, "", "", "", null );
 
                             db.collection("users").document(user.getUserID())
                                     .set(user)
@@ -97,7 +100,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     // check if username and password fields are not empty
     private boolean validateInput() {
-        String username = usernameText.getText().toString().trim();
+        String username = emailText.getText().toString().trim();
         String password = passwordText.getText().toString().trim();
         String name = nameText.getText().toString().trim();
         if ((username.isEmpty()) || (password.isEmpty()) || (name.isEmpty())) {
