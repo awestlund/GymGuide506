@@ -7,12 +7,77 @@
     tools:context="com.example.gymguide.HomeActivity">
 
     <TextView
-        android:id="@+id/home"
+        android:id="@+id/date_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/time_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date_textview"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/qrcode_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="Scan QR Code" />
+
+    <TextView
+        android:id="@+id/completed_workouts_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_textview"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="15dp"
+        android:text="Completed Workouts"
+        android:textSize="20sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/completed_workouts_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/completed_workouts_textview"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:id="@+id/recommended_workouts_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/completed_workouts_recyclerview"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="2dp"
+        android:text="Recommended Workouts"
+        android:textSize="25sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recommended_workouts_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Home"
-        android:textSize="32dp"
-        android:textColor="@color/colorPrimaryDark"
-        />
+        android:layout_below="@+id/recommended_workouts_textview"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp" />
+
+
 
 </RelativeLayout>
