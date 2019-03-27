@@ -17,10 +17,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.gymguide.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -30,12 +36,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class HomeActivity extends Fragment{
-    private List<Exercise> userCompExcerciseList = new ArrayList<>();
-    private List<Exercise> userRecExcerciseList = new ArrayList<>();
     CompletedWorkoutsView compWorkoutsAdapter;
     RecommendedWorkoutsView recWorkoutsAdapter;
     FirebaseFirestore db;
@@ -70,72 +76,80 @@ public class HomeActivity extends Fragment{
                 startActivity(i);
             }
         });
+        System.out.println("User ID: " + auth.getUid());
         if(auth.getCurrentUser() != null) {
-            RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
+            final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
             compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-
-            db.collection("f ").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    if(e !=null){
-                        Log.w("Listen failed.", e);
-                        return;
-                    }
-                    List<Exercise> usersCompWorkouts = new ArrayList<>();
-                    for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
-                        Exercise tmp = (Exercise) doc.getData();
-                        if(tmp !=null){
-                            usersCompWorkouts.add(tmp);
+            CollectionReference compWorkouts = db.collection("workoutHistory");
+            compWorkouts.whereEqualTo("userID", auth.getUid());
+            compWorkouts.whereEqualTo("userID", auth.getUid());
+            db.collection("workoutHistory").whereEqualTo("userID", auth.getUid()).get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                System.out.println(task.getResult().size());
+                                final List<Exercise> userCompExcerciseList = new ArrayList<>();
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    ArrayList<String> temp = (ArrayList<String>) document.get("exerciseID");
+                                    for(int i=0; i<temp.size(); i++){
+                                        String s = temp.get(i);
+                                        final DocumentReference docRef = db.collection("exercise").document(s.trim());
+                                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot doc = task.getResult();
+                                                    Exercise e = new Exercise();
+                                                    e.setExerciseVideoURL(doc.getData().get("exerciseVideoURL").toString());
+                                                    e.setEquipmentID(doc.getData().get("equipmentID").toString());
+                                                    e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
+                                                    e.setExerciseName(doc.getData().get("exerciseName").toString());
+                                                    userCompExcerciseList.add(e);
+                                                    compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), userCompExcerciseList);
+                                                    compWorkoutsRV.setAdapter(compWorkoutsAdapter);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
                         }
-                    }
-                }
-            });
-            for (int i = 0; i < 10; i++) {
-                Exercise e = new Exercise();
-                e.setExerciseVideoURL("http://images.clipartpanda.com/number-one-clipart-847-blue-number-one-clip-art.png");
-                userCompExcerciseList.add(e);
-            }
-            compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), userCompExcerciseList);
-            compWorkoutsRV.setAdapter(compWorkoutsAdapter);
+                    });
 
-            RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
-            recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
-            db.collection("f ").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    if(e !=null){
-                        Log.w("Listen failed.", e);
-                        return;
-                    }
-                    List<Exercise> usersRecWorkouts = new ArrayList<>();
-                    for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
-                        Exercise tmp = (Exercise) doc.getData();
-                        if(tmp !=null){
-                            usersRecWorkouts.add(tmp);
-                        }
-                    }
-                }
-            });
-            for (int i = 0; i < 10; i++) {
-                Exercise e = new Exercise();
-                e.setExerciseVideoURL("http://images.clipartpanda.com/number-one-clipart-847-blue-number-one-clip-art.png");
-                userRecExcerciseList.add(e);
-            }
-            recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), userRecExcerciseList);
-            recWorkoutsRV.setAdapter(recWorkoutsAdapter);
-        }
-        else{
-            RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
-            compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-            List<Exercise> compExcerciseList = new ArrayList<>();
-            compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), compExcerciseList);
-            compWorkoutsRV.setAdapter(compWorkoutsAdapter);
-
-            RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
-            recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
-            List<Exercise> recExcerciseList = new ArrayList<>();
-            recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), recExcerciseList);
-            recWorkoutsRV.setAdapter(recWorkoutsAdapter);
+//            final RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
+//            recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
+//
+//            final List<Exercise> usersRecWorkouts = new ArrayList<>();
+//            db.collection("exercise").get()
+//                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if (task.isSuccessful()) {
+//                                for (QueryDocumentSnapshot document : task.getResult()) {
+//                                    Exercise e = new Exercise();
+//                                    e.setExerciseVideoURL(document.get("exerciseVideoURL").toString());
+//                                    usersRecWorkouts.add(e);
+//                                }
+//                                recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), usersRecWorkouts);
+//                                recWorkoutsRV.setAdapter(recWorkoutsAdapter);
+//                            } else {
+//                            }
+//                        }
+//                    });
+//        }
+//        else{
+//            RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
+//            compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+//            List<Exercise> compExcerciseList = new ArrayList<>();
+//            compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), compExcerciseList);
+//            compWorkoutsRV.setAdapter(compWorkoutsAdapter);
+//
+//            RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
+//            recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
+//            List<Exercise> recExcerciseList = new ArrayList<>();
+//            recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), recExcerciseList);
+//            recWorkoutsRV.setAdapter(recWorkoutsAdapter);
         }
         return rootView;
     }
