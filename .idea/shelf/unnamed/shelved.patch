@@ -1,0 +1,396 @@
+Index: app/src/main/res/layout/completed_workout_list_item.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/completed_workout_list_item.xml	(date 1553524320992)
++++ app/src/main/res/layout/completed_workout_list_item.xml	(date 1553524320992)
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_marginRight="10dp">
++
++    <ImageView
++        android:id="@+id/workout_image"
++        android:layout_width="80dp"
++        android:layout_height="80dp"
++        android:layout_weight="5" />
++
++</LinearLayout>
+Index: app/src/main/java/com/example/gymguide/CompletedWorkoutsView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/gymguide/CompletedWorkoutsView.java	(date 1553192290274)
++++ app/src/main/java/com/example/gymguide/CompletedWorkoutsView.java	(date 1553192290274)
+@@ -0,0 +1,77 @@
++package com.example.gymguide;
++
++import android.content.Context;
++import android.content.Intent;
++import android.graphics.Bitmap;
++import android.graphics.BitmapFactory;
++import android.support.annotation.NonNull;
++import android.support.v7.widget.RecyclerView;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.ImageView;
++import android.widget.TextView;
++
++import java.io.BufferedInputStream;
++import java.io.InputStream;
++import java.net.MalformedURLException;
++import java.net.URL;
++import java.util.List;
++
++public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkoutsView.WorkoutViewHolder> {
++
++    private List<Exercise> mExcersises;
++    public Context mContext;
++
++    public CompletedWorkoutsView(Context context, List<Exercise> excersises){
++        this.mExcersises = excersises;
++        this.mContext = context;
++    }
++
++    @NonNull
++    @Override
++    public WorkoutViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
++        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.completed_workout_list_item, parent, false);
++        return new WorkoutViewHolder(view);
++    }
++
++    @Override
++    public void onBindViewHolder(WorkoutViewHolder holder, int position) {
++        Exercise s = mExcersises.get(position);
++        Bitmap b = null;
++        try {
++            URL url = new URL("http://images.clipartpanda.com/number-one-clipart-847-blue-number-one-clip-art.png");
++            InputStream in = new BufferedInputStream(url.openStream());
++            b = BitmapFactory.decodeStream(in);
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++        holder.workoutImage.setImageBitmap(b);
++    }
++
++    @Override
++    public int getItemCount() {
++        return mExcersises.size();
++    }
++
++    public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
++        ImageView workoutImage;
++        public WorkoutViewHolder(View itemView){
++            super(itemView);
++            workoutImage = (ImageView)itemView.findViewById(R.id.workout_image);
++            itemView.setOnClickListener(this);
++        }
++
++        @Override
++        public void onClick(View v) {
++            Exercise e;
++            int position = getAdapterPosition();
++            if(position != RecyclerView.NO_POSITION){
++                e = mExcersises.get(position);
++            }
++//            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), MainActivity.class);
++//            gotoSemesterActivityIntent.putExtra("workout", e);
++//            v.getContext().startActivity(gotoWorkoutActivityIntent );
++        }
++    }
++}
+Index: app/src/main/java/com/example/gymguide/RecommendedWorkoutsView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/gymguide/RecommendedWorkoutsView.java	(date 1553531286188)
++++ app/src/main/java/com/example/gymguide/RecommendedWorkoutsView.java	(date 1553531286188)
+@@ -0,0 +1,77 @@
++package com.example.gymguide;
++
++import android.content.Context;
++import android.content.Intent;
++import android.graphics.Bitmap;
++import android.graphics.BitmapFactory;
++import android.support.annotation.NonNull;
++import android.support.v7.widget.RecyclerView;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.ImageView;
++import android.widget.TextView;
++
++import java.io.BufferedInputStream;
++import java.io.InputStream;
++import java.net.MalformedURLException;
++import java.net.URL;
++import java.util.List;
++
++public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWorkoutsView.WorkoutViewHolder> {
++
++    private List<Exercise> mExcersises;
++    public Context mContext;
++
++    public RecommendedWorkoutsView(Context context, List<Exercise> excersises){
++        this.mExcersises = excersises;
++        this.mContext = context;
++    }
++
++    @NonNull
++    @Override
++    public WorkoutViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
++        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.completed_workout_list_item, parent, false);
++        return new WorkoutViewHolder(view);
++    }
++
++    @Override
++    public void onBindViewHolder(WorkoutViewHolder holder, int position) {
++        Exercise s = mExcersises.get(position);
++        Bitmap b = null;
++        try {
++            URL url = new URL("http://images.clipartpanda.com/number-one-clipart-847-blue-number-one-clip-art.png");
++            InputStream in = new BufferedInputStream(url.openStream());
++            b = BitmapFactory.decodeStream(in);
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++        holder.workoutImage.setImageBitmap(b);
++    }
++
++    @Override
++    public int getItemCount() {
++        return mExcersises.size();
++    }
++
++    public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
++        ImageView workoutImage;
++        public WorkoutViewHolder(View itemView){
++            super(itemView);
++            workoutImage = (ImageView)itemView.findViewById(R.id.workout_image);
++            itemView.setOnClickListener(this);
++        }
++
++        @Override
++        public void onClick(View v) {
++            Exercise e;
++            int position = getAdapterPosition();
++            if(position != RecyclerView.NO_POSITION){
++                e = mExcersises.get(position);
++            }
++//            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), MainActivity.class);
++//            gotoSemesterActivityIntent.putExtra("workout", e);
++//            v.getContext().startActivity(gotoWorkoutActivityIntent );
++        }
++    }
++}
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.example.gymguide\">\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"Gym Guide\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\">\r\n        <activity android:name=\".QRCodeActivity\"></activity>\r\n        <activity android:name=\".CreateAccountActivity\" />\r\n        <activity android:name=\".ResetActivity\" />\r\n        <activity android:name=\".MainActivity\" />\r\n        <activity android:name=\".LoginActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity android:name=\".MainActivity\">\r\n\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(date 1553542996000)
++++ app/src/main/AndroidManifest.xml	(date 1553544675486)
+@@ -20,9 +20,7 @@
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-        <activity android:name=".MainActivity">
+ 
+-        </activity>
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
+Index: app/src/main/java/com/example/gymguide/HomeActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.gymguide;\r\n\r\nimport android.os.Bundle;\r\nimport android.support.v4.app.Fragment;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport com.example.gymguide.R;\r\n\r\n\r\npublic class HomeActivity extends Fragment{\r\n\r\n    public HomeActivity() {\r\n        // Required empty public constructor\r\n    }\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_home, container, false);\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/gymguide/HomeActivity.java	(date 1553542996000)
++++ app/src/main/java/com/example/gymguide/HomeActivity.java	(date 1553533000094)
+@@ -1,15 +1,34 @@
+ package com.example.gymguide;
+ 
+ import android.os.Bundle;
++import android.os.StrictMode;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
+ import android.support.v4.app.Fragment;
++import android.support.v7.widget.GridLayoutManager;
++import android.support.v7.widget.LinearLayoutManager;
++import android.support.v7.widget.RecyclerView;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.TextView;
+ 
+ import com.example.gymguide.R;
+ 
++import org.w3c.dom.Text;
++
++import java.text.DateFormat;
++import java.text.SimpleDateFormat;
++import java.util.ArrayList;
++import java.util.Date;
++import java.util.List;
++
+ 
+ public class HomeActivity extends Fragment{
++    private List<Exercise> mExcerciseList = new ArrayList<>();
++    private List<Exercise> nExcerciseList = new ArrayList<>();
++    CompletedWorkoutsView compWorkoutsAdapter;
++    CompletedWorkoutsView recWorkoutsAdapter;
+ 
+     public HomeActivity() {
+         // Required empty public constructor
+@@ -18,13 +37,56 @@
+     @Override
+     public void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
++
++
+     }
+ 
+     @Override
+     public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState) {
+         // Inflate the layout for this fragment
+-        return inflater.inflate(R.layout.fragment_home, container, false);
++        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
++        Date d = new Date();
++        SimpleDateFormat day = new SimpleDateFormat("EEE, MMM d");
++        SimpleDateFormat time = new SimpleDateFormat("hh:mm a");
++        TextView dateText = (TextView) rootView.findViewById(R.id.date_textview);
++        TextView timeText = (TextView) rootView.findViewById(R.id.time_textview);
++        dateText.setText(day.format(d));
++        timeText.setText(time.format(d));
++
++        RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
++        compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
++        for(int i=0; i<10; i++){
++            Exercise e = new Exercise();
++            mExcerciseList.add(e);
++        }
++        compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), mExcerciseList);
++        compWorkoutsRV.setAdapter(compWorkoutsAdapter);
++
++        RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
++        recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(),2 ,  LinearLayoutManager.VERTICAL, false));
++        for(int i=0; i<10; i++){
++            Exercise e = new Exercise();
++            nExcerciseList.add(e);
++        }
++        recWorkoutsAdapter = new CompletedWorkoutsView(getContext(), nExcerciseList);
++        recWorkoutsRV.setAdapter(recWorkoutsAdapter);
++
++        return rootView;
++    }
++
++    @Override
++    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
++        super.onViewCreated(view, savedInstanceState);
++        int SDK_INT = android.os.Build.VERSION.SDK_INT;
++        if (SDK_INT > 8)
++        {
++            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
++                    .permitAll().build();
++            StrictMode.setThreadPolicy(policy);
++            //your codes here
++
++        }
+     }
+ }
+ 
+Index: app/src/main/res/layout/fragment_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\"com.example.gymguide.HomeActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/home\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"Home\"\r\n        android:textSize=\"32dp\"\r\n        android:textColor=\"@color/colorPrimaryDark\"\r\n        />\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_home.xml	(date 1553542996000)
++++ app/src/main/res/layout/fragment_home.xml	(date 1553532305153)
+@@ -7,12 +7,65 @@
+     tools:context="com.example.gymguide.HomeActivity">
+ 
+     <TextView
+-        android:id="@+id/home"
++        android:id="@+id/date_textview"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_alignParentStart="true"
++        android:layout_alignParentTop="true"
++        android:layout_marginStart="10dp"
++        android:layout_marginTop="15dp"
++        android:text="TextView" />
++
++    <TextView
++        android:id="@+id/time_textview"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_below="@+id/date_textview"
++        android:layout_alignParentStart="true"
++        android:layout_marginStart="10dp"
++        android:layout_marginTop="2dp"
++        android:text="TextView" />
++
++    <Button
++        android:id="@+id/button"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_alignParentTop="true"
++        android:layout_alignParentEnd="true"
++        android:layout_marginTop="10dp"
++        android:layout_marginEnd="10dp"
++        android:text="Scan QR Code" />
++
++    <TextView
++        android:id="@+id/completed_workouts_textview"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_below="@+id/time_textview"
++        android:layout_alignParentStart="true"
++        android:layout_marginStart="0dp"
++        android:layout_marginTop="15dp"
++        android:text="Completed Workouts" />
++
++    <android.support.v7.widget.RecyclerView
++        android:id="@+id/completed_workouts_recyclerview"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:layout_below="@+id/completed_workouts_textview"
++        android:layout_alignParentStart="true"
++        android:layout_marginStart="0dp"
++        android:layout_marginTop="5dp"
++        android:layout_marginBottom="400dp" />
++
++    <android.support.v7.widget.RecyclerView
++        android:id="@+id/recommended_workouts_recyclerview"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+-        android:text="Home"
+-        android:textSize="32dp"
+-        android:textColor="@color/colorPrimaryDark"
+-        />
++        android:layout_below="@+id/completed_workouts_recyclerview"
++        android:layout_alignParentEnd="true"
++        android:layout_alignParentBottom="true"
++        android:layout_marginTop="-370dp"
++        android:layout_marginEnd="0dp"
++        android:layout_marginBottom="1dp" />
++
+ 
+ </RelativeLayout>
+\ No newline at end of file
