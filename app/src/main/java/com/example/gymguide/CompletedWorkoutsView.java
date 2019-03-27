@@ -69,8 +69,8 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
             if(position != RecyclerView.NO_POSITION){
                 e = mExcersises.get(position);
             }
-//            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), MainActivity.class);
-//            gotoSemesterActivityIntent.putExtra("workout", e);
+//            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), SingleExerciseActivity.class);
+//            gotoSemesterActivityIntent.putExtra("exercise", e);
 //            v.getContext().startActivity(gotoWorkoutActivityIntent );
         }
     }

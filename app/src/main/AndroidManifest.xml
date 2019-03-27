@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".CreateAccountActivity"></activity>
+        <activity android:name=".QRCodeActivity"></activity>
         <activity android:name=".ResetActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
