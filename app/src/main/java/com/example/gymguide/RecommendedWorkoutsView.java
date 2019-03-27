@@ -22,17 +22,28 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
 
     private List<Exercise> mExcersises;
     public Context mContext;
+    CustomItemClickListener listener;
 
-    public RecommendedWorkoutsView(Context context, List<Exercise> excersises){
+    public RecommendedWorkoutsView(Context context, List<Exercise> excersises, CustomItemClickListener listener){
         this.mExcersises = excersises;
         this.mContext = context;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public WorkoutViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recommended_workout_list_item, parent, false);
-        return new WorkoutViewHolder(view);
+
+        final WorkoutViewHolder wvh = new WorkoutViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v, wvh.getPosition());
+            }
+        });
+
+        return wvh;
     }
 
     @Override
@@ -74,4 +85,5 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
 //            v.getContext().startActivity(gotoWorkoutActivityIntent );
         }
     }
+
 }

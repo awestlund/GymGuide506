@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gymguide.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -121,7 +122,12 @@ public class HomeActivity extends Fragment{
                 e.setExerciseVideoURL("http://images.clipartpanda.com/number-one-clipart-847-blue-number-one-clip-art.png");
                 userRecExcerciseList.add(e);
             }
-            recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), userRecExcerciseList);
+            recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), userRecExcerciseList, new CustomItemClickListener(){
+                @Override
+                public void onItemClick(View v, int position) {
+                    Toast.makeText(HomeActivity.this.getActivity(), "Clicked Item: "+position, Toast.LENGTH_SHORT).show();
+                }
+            });
             recWorkoutsRV.setAdapter(recWorkoutsAdapter);
         }
         else{
@@ -134,7 +140,12 @@ public class HomeActivity extends Fragment{
             RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
             recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
             List<Exercise> recExcerciseList = new ArrayList<>();
-            recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), recExcerciseList);
+            recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), userRecExcerciseList, new CustomItemClickListener(){
+                @Override
+                public void onItemClick(View v, int position) {
+                    Toast.makeText(HomeActivity.this.getActivity(), "Clicked Item: "+position, Toast.LENGTH_SHORT).show();
+                }
+            });
             recWorkoutsRV.setAdapter(recWorkoutsAdapter);
         }
         return rootView;
