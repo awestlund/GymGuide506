@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,13 +33,11 @@ public class SingleExerciseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        System.out.println(e.getExerciseVideoURL());
         TextView workoutName = (TextView) findViewById(R.id.exercise_title);
         workoutName.setText(e.getExerciseName());
 
         TextView workoutDescription = (TextView) findViewById(R.id.description_textview);
-        workoutDescription.setText(e.getExerciseDescription());
+        workoutDescription.setText(Html.fromHtml(e.getExerciseDescription().toString()));
 
         try {
             URL url = new URL(e.getExerciseVideoURL());
