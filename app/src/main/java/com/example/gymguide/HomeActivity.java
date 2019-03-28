@@ -117,39 +117,39 @@ public class HomeActivity extends Fragment{
                         }
                     });
 
-//            final RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
-//            recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
-//
-//            final List<Exercise> usersRecWorkouts = new ArrayList<>();
-//            db.collection("exercise").get()
-//                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                            if (task.isSuccessful()) {
-//                                for (QueryDocumentSnapshot document : task.getResult()) {
-//                                    Exercise e = new Exercise();
-//                                    e.setExerciseVideoURL(document.get("exerciseVideoURL").toString());
-//                                    usersRecWorkouts.add(e);
-//                                }
-//                                recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), usersRecWorkouts);
-//                                recWorkoutsRV.setAdapter(recWorkoutsAdapter);
-//                            } else {
-//                            }
-//                        }
-//                    });
-//        }
-//        else{
-//            RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
-//            compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//            List<Exercise> compExcerciseList = new ArrayList<>();
-//            compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), compExcerciseList);
-//            compWorkoutsRV.setAdapter(compWorkoutsAdapter);
-//
-//            RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
-//            recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
-//            List<Exercise> recExcerciseList = new ArrayList<>();
-//            recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), recExcerciseList);
-//            recWorkoutsRV.setAdapter(recWorkoutsAdapter);
+            final RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
+            recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
+
+            final List<Exercise> usersRecWorkouts = new ArrayList<>();
+            db.collection("exercise").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Exercise e = new Exercise();
+                                    e.setExerciseVideoURL(document.get("exerciseVideoURL").toString());
+                                    usersRecWorkouts.add(e);
+                                }
+                                recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), usersRecWorkouts);
+                                recWorkoutsRV.setAdapter(recWorkoutsAdapter);
+                            } else {
+                            }
+                        }
+                    });
+        }
+        else{
+            RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
+            compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            List<Exercise> compExcerciseList = new ArrayList<>();
+            compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), compExcerciseList);
+            compWorkoutsRV.setAdapter(compWorkoutsAdapter);
+
+            RecyclerView recWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.recommended_workouts_recyclerview);
+            recWorkoutsRV.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
+            List<Exercise> recExcerciseList = new ArrayList<>();
+            recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), recExcerciseList);
+            recWorkoutsRV.setAdapter(recWorkoutsAdapter);
         }
         return rootView;
     }

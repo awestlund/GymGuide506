@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,10 +44,10 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
             URL url = new URL(s.exerciseVideoURL);
             InputStream in = new BufferedInputStream(url.openStream());
             b = BitmapFactory.decodeStream(in);
+            holder.workoutImage.setImageBitmap(b);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        holder.workoutImage.setImageBitmap(b);
     }
 
     @Override
@@ -64,14 +65,18 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
 
         @Override
         public void onClick(View v) {
-            Exercise e;
+            Exercise e = null;
             int position = getAdapterPosition();
-            if(position != RecyclerView.NO_POSITION){
+//            if(position != RecyclerView.NO_POSITION){
                 e = mExcersises.get(position);
-            }
-//            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), SingleExerciseActivity.class);
-//            gotoSemesterActivityIntent.putExtra("exercise", e);
-//            v.getContext().startActivity(gotoWorkoutActivityIntent );
+                System.out.println("TEST " + e.getExerciseName());
+//            }
+
+            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), SingleExerciseActivty.class);
+//            Intent gotoWorkoutActivityIntent = new Intent().setClass(v.getContext(), SingleExerciseActivty.class);
+            gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            gotoWorkoutActivityIntent.putExtra("exercise", e);
+            v.getContext().startActivity(gotoWorkoutActivityIntent );
         }
     }
 }

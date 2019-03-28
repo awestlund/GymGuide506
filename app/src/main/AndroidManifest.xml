@@ -9,9 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".CreateAccountActivity"></activity>
-        <activity android:name=".QRCodeActivity"></activity>
+        android:usesCleartextTraffic="true"
+        android:screenOrientation="portrait" >
+        <activity
+            android:name=".SingleExerciseActivty"
+            android:label="@string/title_activity_single_exercise_activty"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".QRCodeActivity" />
         <activity android:name=".ResetActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -20,9 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
