@@ -126,9 +126,12 @@ public class HomeActivity extends Fragment{
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                for (QueryDocumentSnapshot doc : task.getResult()) {
                                     Exercise e = new Exercise();
-                                    e.setExerciseVideoURL(document.get("exerciseVideoURL").toString());
+                                    e.setExerciseVideoURL(doc.getData().get("exerciseVideoURL").toString());
+                                    e.setEquipmentID(doc.getData().get("equipmentID").toString());
+                                    e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
+                                    e.setExerciseName(doc.getData().get("exerciseName").toString());
                                     usersRecWorkouts.add(e);
                                 }
                                 recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), usersRecWorkouts);
