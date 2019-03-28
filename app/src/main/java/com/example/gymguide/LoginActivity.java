@@ -62,9 +62,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 // make sure all relevant fields are populated
                 if (validateInput(username, password) != VALID_INPUT){
+                    Toast.makeText(LoginActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                signInWithCredentials(username, password);
+                if (signInWithCredentials(username, password) == SIGN_IN_FAILED){
+                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -104,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
 //        String username = usernameText.getText().toString().trim();
 //        String password = passwordText.getText().toString().trim();
         if ((username.isEmpty()) || (password.isEmpty())) {
-            Toast.makeText(LoginActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return INVALID_INPUT;
         }
         return VALID_INPUT;
@@ -120,9 +122,6 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     finish();
                     startActivity(intent);
-                }
-                else {
-                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
