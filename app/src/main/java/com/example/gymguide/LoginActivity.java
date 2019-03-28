@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // check if username and password fields are not empty
-    private int validateInput(String username, String password) {
+    protected int validateInput(String username, String password) {
 
 //        String username = usernameText.getText().toString().trim();
 //        String password = passwordText.getText().toString().trim();
@@ -112,8 +112,9 @@ public class LoginActivity extends AppCompatActivity {
         return VALID_INPUT;
     }
 
-    private int signInWithCredentials(String username, String password){
+    protected int signInWithCredentials(String username, String password){
         // try to sign in with credentials
+
         firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
