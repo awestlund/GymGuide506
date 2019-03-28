@@ -40,13 +40,13 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
         Exercise s = mExcersises.get(position);
         Bitmap b = null;
         try {
-            URL url = new URL("http://images.clipartpanda.com/number-one-clipart-847-blue-number-one-clip-art.png");
+            URL url = new URL(s.getExerciseVideoURL());
             InputStream in = new BufferedInputStream(url.openStream());
             b = BitmapFactory.decodeStream(in);
+            holder.workoutImage.setImageBitmap(b);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        holder.workoutImage.setImageBitmap(b);
     }
 
     @Override
@@ -64,14 +64,15 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
 
         @Override
         public void onClick(View v) {
-            Exercise e;
+            Exercise e = null;
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION){
                 e = mExcersises.get(position);
             }
-//            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), MainActivity.class);
-//            gotoSemesterActivityIntent.putExtra("workout", e);
-//            v.getContext().startActivity(gotoWorkoutActivityIntent );
+            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), SingleExerciseActivity.class);
+            gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            gotoWorkoutActivityIntent.putExtra("exercise", e);
+            v.getContext().startActivity(gotoWorkoutActivityIntent );
         }
     }
 }

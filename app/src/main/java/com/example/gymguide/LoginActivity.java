@@ -21,6 +21,10 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBtn, createAccBtn, guestBtn, rstPassword;
     private FirebaseAuth firebaseAuth;
 
+    int VALID_INPUT = 0;
+    int INVALID_INPUT = 1;
+    int SIGN_IN_FAILED = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,24 +61,10 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordText.getText().toString().trim();
 
                 // make sure all relevant fields are populated
-                if (!validateInput()){
+                if (validateInput(username, password) != VALID_INPUT){
                     return;
                 }
-                // try to sign in with credentials
-                firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            finish();
-                            startActivity(intent);
-                        }
-                        else {
-                            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                signInWithCredentials(username, password);
 
             }
         });
@@ -109,14 +99,34 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // check if username and password fields are not empty
-    private boolean validateInput() {
-        String username = usernameText.getText().toString().trim();
-        String password = passwordText.getText().toString().trim();
+    private int validateInput(String username, String password) {
+
+//        String username = usernameText.getText().toString().trim();
+//        String password = passwordText.getText().toString().trim();
         if ((username.isEmpty()) || (password.isEmpty())) {
             Toast.makeText(LoginActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
-            return false;
+            return INVALID_INPUT;
         }
-        return true;
+        return VALID_INPUT;
+    }
+
+    private int signInWithCredentials(String username, String password){
+        // try to sign in with credentials
+        firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    finish();
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        return SIGN_IN_FAILED;
     }
 
 

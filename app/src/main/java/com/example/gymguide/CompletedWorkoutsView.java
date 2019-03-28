@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -43,10 +41,10 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
             URL url = new URL(s.exerciseVideoURL);
             InputStream in = new BufferedInputStream(url.openStream());
             b = BitmapFactory.decodeStream(in);
+            holder.workoutImage.setImageBitmap(b);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        holder.workoutImage.setImageBitmap(b);
     }
 
     @Override
@@ -64,14 +62,16 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
 
         @Override
         public void onClick(View v) {
-            Exercise e;
+            Exercise e = null;
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION){
                 e = mExcersises.get(position);
             }
-//            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), SingleExerciseActivity.class);
-//            gotoSemesterActivityIntent.putExtra("exercise", e);
-//            v.getContext().startActivity(gotoWorkoutActivityIntent );
+
+            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), SingleExerciseActivity.class);
+            gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            gotoWorkoutActivityIntent.putExtra("exercise", e);
+            v.getContext().startActivity(gotoWorkoutActivityIntent );
         }
     }
 }
