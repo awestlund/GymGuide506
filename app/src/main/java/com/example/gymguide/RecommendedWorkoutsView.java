@@ -68,6 +68,7 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION){
                 e = mExcersises.get(position);
+                //           System.out.println("TEST " + e.getExerciseName());
             }
             Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), SingleExerciseActivity.class);
             gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
