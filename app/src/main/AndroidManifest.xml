@@ -7,14 +7,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="Gym Guide"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        android:screenOrientation="portrait" >
+        android:usesCleartextTraffic="true">
+        <activity android:name=".WorkoutListActivity"></activity>
         <activity
             android:name=".SingleExerciseActivity"
             android:label="@string/title_activity_single_exercise_activty"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".QRCodeActivity" />
         <activity android:name=".ResetActivity" />
@@ -25,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

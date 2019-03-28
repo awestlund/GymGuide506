@@ -19,6 +19,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
 
     Exercise e;
     ImageView workoutImage;
+    private TextView qrText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
         e = (Exercise) getIntent().getSerializableExtra("exercise");
 
         workoutImage = findViewById(R.id.workout_imageView);
+
     }
 
     @Override
