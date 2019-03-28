@@ -65,9 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (signInWithCredentials(username, password) == SIGN_IN_FAILED){
-                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                }
+                signInWithCredentials(username, password);
 
             }
         });
@@ -102,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // check if username and password fields are not empty
-    private int validateInput(String username, String password) {
+    protected int validateInput(String username, String password) {
 
 //        String username = usernameText.getText().toString().trim();
 //        String password = passwordText.getText().toString().trim();
@@ -112,8 +110,9 @@ public class LoginActivity extends AppCompatActivity {
         return VALID_INPUT;
     }
 
-    private int signInWithCredentials(String username, String password){
+    protected int signInWithCredentials(String username, String password){
         // try to sign in with credentials
+
         firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -122,6 +121,9 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     finish();
                     startActivity(intent);
+                }
+                else{
+                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -63,9 +63,16 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 // make sure all relevant fields are populated
                 if (validateInput(email, password, name) != VALID_INPUT) {
+                    Toast.makeText(CreateAccountActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                createAccount(email, password, name);
+                int status = createAccount(email, password, name);
+                if (status == 2){
+                    Toast.makeText(CreateAccountActivity.this, "Password must 6 or more characters.", Toast.LENGTH_SHORT).show();
+                }
+                if (status == 3){
+                    Toast.makeText(CreateAccountActivity.this, "Create account failed.", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -73,20 +80,18 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
     // check if username and password fields are not empty
-    private int validateInput(String email, String password, String name) {
+    protected int validateInput(String email, String password, String name) {
 
         if ((email.isEmpty()) || (password.isEmpty()) || (name.isEmpty())) {
-            Toast.makeText(CreateAccountActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return INVALID_INPUT;
         }
         return VALID_INPUT;
     }
 
-    private int createAccount(final String email, final String password, final String name){
+    protected int createAccount(final String email, final String password, final String name){
         // try to create a new user with the given credentials
 
         if (password.length() < 6) {
-            Toast.makeText(CreateAccountActivity.this, "Password must 6 or more characters.", Toast.LENGTH_SHORT).show();
             return PASSWORD_SHORT;
         }
 
