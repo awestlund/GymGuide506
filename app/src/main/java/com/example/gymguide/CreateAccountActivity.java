@@ -27,6 +27,11 @@ public class CreateAccountActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
 
+    int VALID_INPUT = 0;
+    int INVALID_INPUT = 1;
+    int PASSWORD_SHORT = 2;
+    int CREATE_ACCOUNT_FAILED = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,57 +62,64 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
                 // make sure all relevant fields are populated
-                if (!validateInput()) {
+                if (validateInput(email, password, name) != VALID_INPUT) {
                     return;
                 }
-                // try to create a new user with the given credentials
-                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            User user = new User(firebaseAuth.getCurrentUser().getUid(), name, email, "", "", "", null );
+                createAccount(email, password, name);
 
-                            db.collection("users").document(user.getUserID())
-                                    .set(user)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d("create account", "DocumentSnapshot successfully written!");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w("create account", "Error writing document", e);
-                                        }
-                                    });
-
-                            Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                        else if (password.length() < 6) {
-                            Toast.makeText(CreateAccountActivity.this, "Password must 6 or more characters.", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(CreateAccountActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
             }
         });
     }
 
 
     // check if username and password fields are not empty
-    private boolean validateInput() {
-        String username = emailText.getText().toString().trim();
-        String password = passwordText.getText().toString().trim();
-        String name = nameText.getText().toString().trim();
-        if ((username.isEmpty()) || (password.isEmpty()) || (name.isEmpty())) {
+    private int validateInput(String email, String password, String name) {
+
+        if ((email.isEmpty()) || (password.isEmpty()) || (name.isEmpty())) {
             Toast.makeText(CreateAccountActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
-            return false;
+            return INVALID_INPUT;
         }
-        return true;
+        return VALID_INPUT;
+    }
+
+    private int createAccount(final String email, final String password, final String name){
+        // try to create a new user with the given credentials
+
+        if (password.length() < 6) {
+            Toast.makeText(CreateAccountActivity.this, "Password must 6 or more characters.", Toast.LENGTH_SHORT).show();
+            return PASSWORD_SHORT;
+        }
+
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    User user = new User(firebaseAuth.getCurrentUser().getUid(), name, email, "", "", "", null );
+
+                    db.collection("users").document(user.getUserID())
+                            .set(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("create account", "DocumentSnapshot successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("create account", "Error writing document", e);
+                                }
+                            });
+
+                    Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Toast.makeText(CreateAccountActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        return CREATE_ACCOUNT_FAILED;
     }
 }
