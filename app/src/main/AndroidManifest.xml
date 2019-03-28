@@ -12,7 +12,7 @@
         android:usesCleartextTraffic="true"
         android:screenOrientation="portrait" >
         <activity
-            android:name=".SingleExerciseActivty"
+            android:name=".SingleExerciseActivity"
             android:label="@string/title_activity_single_exercise_activty"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".CreateAccountActivity" />
