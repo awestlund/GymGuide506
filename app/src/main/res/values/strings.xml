@@ -9,4 +9,5 @@
     <string name="email">Email</string>
     <string name="action_sign_in_short">Register</string>
     <string name="btn_link_to_login">Already registered. Login Me!</string>
+    <string name="title_activity_single_exercise_activty">SingleExerciseActivty</string>
 </resources>

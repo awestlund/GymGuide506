@@ -40,7 +40,7 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
         Exercise s = mExcersises.get(position);
         Bitmap b = null;
         try {
-            URL url = new URL("http://images.clipartpanda.com/number-one-clipart-847-blue-number-one-clip-art.png");
+            URL url = new URL(s.getExerciseVideoURL());
             InputStream in = new BufferedInputStream(url.openStream());
             b = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
