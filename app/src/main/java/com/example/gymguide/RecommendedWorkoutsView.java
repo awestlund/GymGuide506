@@ -64,14 +64,18 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
 
         @Override
         public void onClick(View v) {
-            Exercise e;
+            Exercise e = null;
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION){
                 e = mExcersises.get(position);
+                //           System.out.println("TEST " + e.getExerciseName());
             }
-//            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), MainActivity.class);
-//            gotoSemesterActivityIntent.putExtra("workout", e);
-//            v.getContext().startActivity(gotoWorkoutActivityIntent );
+
+            Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), SingleExerciseActivity.class);
+//            Intent gotoWorkoutActivityIntent = new Intent().setClass(v.getContext(), SingleExerciseActivity.class);
+            gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            gotoWorkoutActivityIntent.putExtra("exercise", e);
+            v.getContext().startActivity(gotoWorkoutActivityIntent );
         }
     }
 }
