@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
 //    private Button btnQR;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new WorkoutHistory(), "HISTORY");
+        adapter.addFrag(new WorkoutHistoryFragment(), "HISTORY");
         adapter.addFrag(new HomeActivity(), "TODAY");
         adapter.addFrag(new ProfileActivity(), "PROFILE");
 

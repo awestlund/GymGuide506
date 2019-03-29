@@ -1,21 +1,39 @@
 package com.example.gymguide;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.Exclude;
 
-import java.sql.Timestamp;
 import java.util.List;
 
-public class WorkoutHistory  {
+public class WorkoutHistoryFragment extends Fragment {
     String historyID;
     Timestamp workoutDate;
     List<String> exerciseID;
     String userID;
 
-    public WorkoutHistory() {
+    public WorkoutHistoryFragment() {
         // Required empty public constructor
     }
 
-    public WorkoutHistory(String historyID, Timestamp workoutDate, List<String> exerciseID, String userID) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_history, container, false);
+    }
+
+    public WorkoutHistoryFragment(String historyID, Timestamp workoutDate, List<String> exerciseID, String userID) {
         this.historyID = historyID;
         this.workoutDate = workoutDate;
         this.exerciseID = exerciseID;

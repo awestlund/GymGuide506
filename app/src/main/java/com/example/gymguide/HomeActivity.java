@@ -42,7 +42,7 @@ import java.util.Map;
 
 
 public class HomeActivity extends Fragment{
-    CompletedWorkoutsView compWorkoutsAdapter;
+    public static CompletedWorkoutsView compWorkoutsAdapter;
     RecommendedWorkoutsView recWorkoutsAdapter;
     FirebaseFirestore db;
     FirebaseAuth auth;
@@ -57,6 +57,16 @@ public class HomeActivity extends Fragment{
         auth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +86,6 @@ public class HomeActivity extends Fragment{
                 startActivity(i);
             }
         });
-        System.out.println("User ID: " + auth.getUid());
         if(auth.getCurrentUser() != null) {
             final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
             compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -88,7 +97,6 @@ public class HomeActivity extends Fragment{
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                System.out.println(task.getResult().size());
                                 final List<Exercise> userCompExcerciseList = new ArrayList<>();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     ArrayList<String> temp = (ArrayList<String>) document.get("exerciseID");
@@ -105,6 +113,7 @@ public class HomeActivity extends Fragment{
                                                     e.setEquipmentID(doc.getData().get("equipmentID").toString());
                                                     e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
                                                     e.setExerciseName(doc.getData().get("exerciseName").toString());
+                                                    e.setExerciseID(doc.getId());
                                                     userCompExcerciseList.add(e);
                                                     compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), userCompExcerciseList);
                                                     compWorkoutsRV.setAdapter(compWorkoutsAdapter);
@@ -132,6 +141,7 @@ public class HomeActivity extends Fragment{
                                     e.setEquipmentID(doc.getData().get("equipmentID").toString());
                                     e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
                                     e.setExerciseName(doc.getData().get("exerciseName").toString());
+                                    e.setExerciseID(doc.getId());
                                     usersRecWorkouts.add(e);
                                 }
                                 recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), usersRecWorkouts);
