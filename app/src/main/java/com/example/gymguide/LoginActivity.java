@@ -46,11 +46,11 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         // if the current user isn't null redirect them to their home screen
-//        if (user != null){
-//            finish();
-//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(intent);
-//        }
+        if (user != null){
+            finish();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
 
         // try to login with info from usernameText and passwordText
         loginBtn.setOnClickListener(new View.OnClickListener() {
