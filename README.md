@@ -26,3 +26,6 @@ Jump Rope QR Code: https://drive.google.com/file/d/1xy5vGWvi_XNORkQoIWMXniqZWlFu
 Barbell Squat QR Code: https://drive.google.com/file/d/1KfkbCfhI2f-o88vuJJMRWhT72n-etLoA/view?usp=sharing
 
 Step 5: In order to run tests you can either choose the run configuration to run the unit tests, or you can click on the small green circle on the left within CreateAccountActivityTest and LoginActivityTest within com.example.gymguide (test).  Make sure you are in the correct folder because com.example.gymguide (androidTest) does not contain our test files.
+
+Google Doc For This Procedure:
+https://docs.google.com/document/d/1TMvTTOm9pBZtRP5lE7cxvWhkHPrLfGB6vwGAnNUDEH8/edit?usp=sharing
