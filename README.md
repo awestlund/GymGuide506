@@ -1,6 +1,28 @@
 # GymGuide506
-CS 506 Software Engineering Project https://drive.google.com/open?id=1sSahQN81wft8elxjtj6Cuu3lJqsfvHWF
+Iteration 1 Procedure and Instructions
 
-Building and Running App:
+Megan Quinlan, Brian Newberry, Amber Westlund, Andy Zhang, Dave Nugent, Yudong Chen, Nick Timmons
 
-Using Android Studio, use the build tool to build the project. Next click on the play button and choose to use either a virtual android device or have an android phone connected to the computer and select device to run the app on. Next the app should open on the device after building and uploading itself to the device.
+Requirements to run code: 
+- Android Studio
+- An Android device or emulator with Lollipop or above (Android device needed to Scan QR Codes)
+
+Step 1: Clone repository into Android Studio
+https://github.com/awestlund/GymGuide506/ (our repository is public)
+
+Step 2: Checkout branch called master with tag iteration_1 on within GitHub repository 
+https://github.com/awestlund/GymGuide506/tree/master
+
+Step 3: Build project and verify there are no issues when building
+
+Step 4: Run app on an emulator or Android device
+- This will allow you to use the different features
+- You will need a QR code to test out the QR scanning features
+
+Dumbbell Bicep Curls QR Code: https://drive.google.com/file/d/1nKEQn7-RWJWZHRyMKg2uuDHQQ0bNaWVU/view?usp=sharing
+
+Jump Rope QR Code: https://drive.google.com/file/d/1xy5vGWvi_XNORkQoIWMXniqZWlFulGE1/view?usp=sharing
+
+Barbell Squat QR Code: https://drive.google.com/file/d/1KfkbCfhI2f-o88vuJJMRWhT72n-etLoA/view?usp=sharing
+
+Step 5: In order to run tests you can either choose the run configuration to run the unit tests, or you can click on the small green circle on the left within CreateAccountActivityTest and LoginActivityTest within com.example.gymguide (test).  Make sure you are in the correct folder because com.example.gymguide (androidTest) does not contain our test files.
