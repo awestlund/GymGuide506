@@ -35,6 +35,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
     Exercise e;
     ImageView workoutImage;
     private TextView qrText;
+    FloatingActionButton fab;
     FirebaseFirestore db;
     FirebaseAuth auth;
 
@@ -47,6 +48,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
         e = (Exercise) getIntent().getSerializableExtra("exercise");
 
         workoutImage = findViewById(R.id.workout_imageView);
+        fab = findViewById(R.id.btnAddWorkout);
 
     }
 
@@ -68,7 +70,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
             x.printStackTrace();
         }
 
-        FloatingActionButton fab = findViewById(R.id.add_workout_to_user_button);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
