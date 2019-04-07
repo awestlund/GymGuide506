@@ -7,36 +7,78 @@
     tools:context="com.example.gymguide.HomeActivity">
 
     <TextView
-        android:id="@+id/date_textview"
+        android:id="@+id/day_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="127dp"
+        android:layout_marginTop="44dp"
+        android:text="17"
+        android:textColor="@color/gray"
+        android:textSize="90sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/month_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:text="TextView"
-        android:textSize="20sp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="55dp"
+        android:text="MAY"
+        android:textColor="@color/gray"
+        android:textSize="45sp"
+        android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/qrcode_button"
+    <TextView
+        android:id="@+id/year_textview"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="109dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="98dp"
+        android:text="2019"
+        android:textColor="@color/gray"
+        android:textSize="45sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/qrcode_button"
+        android:layout_width="145dp"
+        android:layout_height="145dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:text="Scan QR Code" />
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="21dp"
+        android:background="@drawable/qrimage" />
+
+    <TextView
+        android:id="@+id/scan_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/qrcode_button"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="268dp"
+        android:layout_marginTop="165dp"
+        android:text="Scan QR Code"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/completed_workouts_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/date_textview"
+        android:layout_below="@+id/scan_text"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Completed Workouts"
-        android:textSize="20sp" />
+        android:textSize="25sp"
+        android:textColor="@color/black"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/completed_workouts_recyclerview"
@@ -45,7 +87,7 @@
         android:layout_below="@+id/completed_workouts_textview"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="-1dp" />
 
     <TextView
         android:id="@+id/recommended_workouts_textview"
@@ -56,7 +98,8 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="2dp"
         android:text="Recommended Workouts"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:textColor="@color/black"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recommended_workouts_recyclerview"
@@ -65,10 +108,8 @@
         android:layout_below="@+id/recommended_workouts_textview"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-
+        android:text="workoutName"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp" />
-
-
 
 </RelativeLayout>
