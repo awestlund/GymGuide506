@@ -48,8 +48,7 @@ public class HomeActivity extends Fragment{
     RecommendedWorkoutsView recWorkoutsAdapter;
     FirebaseFirestore db;
     FirebaseAuth auth;
-    Boolean imagesLoaded;
-
+    
     public HomeActivity() {
         // Required empty public constructor
     }
@@ -59,7 +58,6 @@ public class HomeActivity extends Fragment{
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
-        imagesLoaded = false;
     }
 
     @Override
@@ -98,7 +96,7 @@ public class HomeActivity extends Fragment{
             }
         });
 
-        if((!imagesLoaded) && (auth.getCurrentUser() != null)) {
+        if(auth.getCurrentUser() != null) {
             final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
             compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
             CollectionReference compWorkouts = db.collection("workoutHistory");
@@ -169,7 +167,6 @@ public class HomeActivity extends Fragment{
                             }
                         }
                     });
-            imagesLoaded = true;
         }
         else{
             RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
