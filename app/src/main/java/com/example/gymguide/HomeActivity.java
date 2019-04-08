@@ -109,7 +109,8 @@ public class HomeActivity extends Fragment{
                                                 if (task.isSuccessful()) {
                                                     DocumentSnapshot doc = task.getResult();
                                                     Exercise e = new Exercise();
-                                                    e.setExerciseVideoURL(doc.getData().get("exerciseVideoURL").toString());
+                                                    e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
+                                                    //e.setExerciseVideoURL(doc.getData().get("exercisePhotoURL").toString());
                                                     e.setEquipmentID(doc.getData().get("equipmentID").toString());
                                                     e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
                                                     e.setExerciseName(doc.getData().get("exerciseName").toString());
@@ -137,7 +138,8 @@ public class HomeActivity extends Fragment{
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
                                     Exercise e = new Exercise();
-                                    e.setExerciseVideoURL(doc.getData().get("exerciseVideoURL").toString());
+                                    e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
+                                    //e.setExerciseVideoURL(doc.getData().get("exercisePhotoURL").toString());
                                     e.setEquipmentID(doc.getData().get("equipmentID").toString());
                                     e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
                                     e.setExerciseName(doc.getData().get("exerciseName").toString());

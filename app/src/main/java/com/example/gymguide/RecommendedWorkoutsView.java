@@ -40,7 +40,7 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
         Exercise s = mExcersises.get(position);
         Bitmap b = null;
         try {
-            URL url = new URL(s.getExerciseVideoURL());
+            URL url = new URL(s.getExercisePhotoURL());
             InputStream in = new BufferedInputStream(url.openStream());
             b = BitmapFactory.decodeStream(in);
             holder.workoutImage.setImageBitmap(b);
