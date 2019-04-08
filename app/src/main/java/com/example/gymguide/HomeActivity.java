@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gymguide.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -110,7 +111,7 @@ public class HomeActivity extends Fragment{
                                                     DocumentSnapshot doc = task.getResult();
                                                     Exercise e = new Exercise();
                                                     e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
-                                                    //e.setExerciseVideoURL(doc.getData().get("exercisePhotoURL").toString());
+                                                    e.setExerciseVideoURL(doc.getData().get("exercisePhotoURL").toString());
                                                     e.setEquipmentID(doc.getData().get("equipmentID").toString());
                                                     e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
                                                     e.setExerciseName(doc.getData().get("exerciseName").toString());
@@ -137,14 +138,19 @@ public class HomeActivity extends Fragment{
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
-                                    Exercise e = new Exercise();
-                                    e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
-                                    //e.setExerciseVideoURL(doc.getData().get("exercisePhotoURL").toString());
-                                    e.setEquipmentID(doc.getData().get("equipmentID").toString());
-                                    e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
-                                    e.setExerciseName(doc.getData().get("exerciseName").toString());
-                                    e.setExerciseID(doc.getId());
-                                    usersRecWorkouts.add(e);
+                                    try {
+                                        Exercise e = new Exercise();
+                                        e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
+                                        e.setEquipmentID(doc.getData().get("equipmentID").toString());
+                                        e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
+                                        e.setExerciseName(doc.getData().get("exerciseName").toString());
+                                        e.setExerciseVideoURL((doc.getData().get("exercisePhotoURL")).toString());
+                                        e.setExerciseID(doc.getId());
+                                        usersRecWorkouts.add(e);
+                                    }
+                                    catch (Exception ex){
+                                        Toast.makeText(getContext(), "Error Loading some workouts", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), usersRecWorkouts);
                                 recWorkoutsRV.setAdapter(recWorkoutsAdapter);
