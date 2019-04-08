@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.gymguide.R;
@@ -74,10 +75,17 @@ public class HomeActivity extends Fragment{
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         Date d = new Date();
-        SimpleDateFormat day = new SimpleDateFormat("EEE, MMM d");
-        TextView dateText = (TextView) rootView.findViewById(R.id.date_textview);
-        dateText.setText(day.format(d));
-        Button T=(Button)rootView.findViewById(R.id.qrcode_button);
+        SimpleDateFormat day = new SimpleDateFormat("d");
+        SimpleDateFormat year = new SimpleDateFormat("y");
+        SimpleDateFormat month = new SimpleDateFormat("MMM");
+        String monthCaps = month.format(d).toString().toUpperCase();
+        TextView dayText = (TextView) rootView.findViewById(R.id.day_textview);
+        TextView monthText = (TextView) rootView.findViewById(R.id.month_textview);
+        TextView yearText = (TextView) rootView.findViewById(R.id.year_textview);
+        dayText.setText(day.format(d));
+        monthText.setText(monthCaps);
+        yearText.setText(year.format(d));
+        ImageButton T = (ImageButton) rootView.findViewById(R.id.qrcode_button);
         T.setOnClickListener(new View.OnClickListener() {
 
             @Override

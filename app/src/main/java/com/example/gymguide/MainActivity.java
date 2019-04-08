@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new WorkoutHistoryFragment(), "HISTORY");
         adapter.addFrag(new HomeActivity(), "TODAY");
+        adapter.addFrag(new WorkoutHistoryFragment(), "HISTORY");
         adapter.addFrag(new ProfileActivity(), "PROFILE");
 
         viewPager.setAdapter(adapter);
