@@ -66,6 +66,14 @@ public class SingleExerciseActivity extends AppCompatActivity {
         fab = findViewById(R.id.btnAddWorkout);
         btnVideo = findViewById(R.id.btn_video);
 
+        btnVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(e.getExerciseVideoURL())));
+                Log.i("Video", "Video Playing....");
+            }
+        });
+
     }
 
     @Override
@@ -86,13 +94,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
             x.printStackTrace();
         }
 
-        btnVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(e.getExerciseVideoURL())));
-                Log.i("Video", "Video Playing....");
-            }
-        });
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
