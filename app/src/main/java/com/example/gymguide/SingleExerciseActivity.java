@@ -1,14 +1,26 @@
 package com.example.gymguide;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,10 +46,14 @@ public class SingleExerciseActivity extends AppCompatActivity {
 
     Exercise e;
     ImageView workoutImage;
+    VideoView videoPlayerView;
+        DisplayMetrics dm;
+        MediaController mc;
     private TextView qrText;
     FloatingActionButton fab;
     FirebaseFirestore db;
     FirebaseAuth auth;
+    Button btnVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +62,9 @@ public class SingleExerciseActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         e = (Exercise) getIntent().getSerializableExtra("exercise");
-
-        workoutImage = findViewById(R.id.workout_imageView);
+        workoutImage = findViewById(R.id.imageView);
         fab = findViewById(R.id.btnAddWorkout);
+        btnVideo = findViewById(R.id.btn_video);
 
     }
 
@@ -62,7 +78,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
         workoutDescription.setText(Html.fromHtml(e.getExerciseDescription().toString()));
 
         try {
-            URL url = new URL(e.getExerciseVideoURL());
+            URL url = new URL(e.getExercisePhotoURL());
             InputStream in = new BufferedInputStream(url.openStream());
             Bitmap b = BitmapFactory.decodeStream(in);
             workoutImage.setImageBitmap(b);
@@ -70,6 +86,13 @@ public class SingleExerciseActivity extends AppCompatActivity {
             x.printStackTrace();
         }
 
+        btnVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(e.getExerciseVideoURL())));
+                Log.i("Video", "Video Playing....");
+            }
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,5 +109,6 @@ public class SingleExerciseActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

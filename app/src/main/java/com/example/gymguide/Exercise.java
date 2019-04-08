@@ -8,15 +8,17 @@ public class Exercise implements Serializable {
     String exerciseDescription;
     String exerciseID;
     String exerciseVideoURL;
+    String exercisePhotoURL;
     String equipmentID;
 
     public Exercise() {};
 
-    public Exercise(String exerciseName, String exerciseDescription, String exerciseID, String exerciseVideoURL, String equipmentID) {
+    public Exercise(String exerciseName, String exerciseDescription, String exerciseID, String exerciseVideoURL, String exercisePhotoURL, String equipmentID) {
         this.exerciseName = exerciseName;
         this.exerciseDescription = exerciseDescription;
         this.exerciseID = exerciseID;
         this.exerciseVideoURL = exerciseVideoURL;
+        this.exercisePhotoURL = exercisePhotoURL;
         this.equipmentID = equipmentID;
     }
 
@@ -47,6 +49,13 @@ public class Exercise implements Serializable {
 
     public String getExerciseVideoURL() {
         return exerciseVideoURL;
+    }
+    public String getExercisePhotoURL() {
+        return exercisePhotoURL;
+    }
+
+    public void setExercisePhotoURL(String exercisePhotoURL) {
+        this.exercisePhotoURL = exercisePhotoURL;
     }
 
     public void setExerciseVideoURL(String exerciseVideoURL) {
