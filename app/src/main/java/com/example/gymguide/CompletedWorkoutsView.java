@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -42,6 +43,7 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
             InputStream in = new BufferedInputStream(url.openStream());
             b = BitmapFactory.decodeStream(in);
             holder.workoutImage.setImageBitmap(b);
+            holder.workoutName.setText(s.getExerciseName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,9 +56,12 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
 
     public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView workoutImage;
+        TextView workoutName;
+
         public WorkoutViewHolder(View itemView){
             super(itemView);
             workoutImage = (ImageView)itemView.findViewById(R.id.workout_image);
+            workoutName = (TextView)itemView.findViewById(R.id.workout_name);
             itemView.setOnClickListener(this);
         }
 

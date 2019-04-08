@@ -13,7 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="127dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="41dp"
         android:text="17"
         android:textColor="@color/gray"
         android:textSize="90sp"
@@ -26,7 +26,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="49dp"
         android:text="MAY"
         android:textColor="@color/gray"
         android:textSize="45sp"
@@ -38,8 +38,8 @@
         android:layout_height="109dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="98dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="95dp"
         android:text="2019"
         android:textColor="@color/gray"
         android:textSize="45sp"
@@ -67,16 +67,24 @@
         android:text="Scan QR Code"
         android:textColor="@color/black"
         android:textSize="15sp" />
+    <View
+        android:id="@+id/div"
+        android:layout_below="@+id/scan_text"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
 
     <TextView
         android:id="@+id/completed_workouts_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/scan_text"
+        android:layout_below="@+id/div"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:text="Completed Workouts"
+        android:textStyle="bold"
         android:textSize="25sp"
         android:textColor="@color/black"/>
 
@@ -88,6 +96,13 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="-1dp" />
+    <View
+        android:id="@+id/div2"
+        android:layout_below="@+id/completed_workouts_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
 
     <TextView
         android:id="@+id/recommended_workouts_textview"
@@ -96,8 +111,9 @@
         android:layout_below="@+id/completed_workouts_recyclerview"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="0dp"
         android:text="Recommended Workouts"
+        android:textStyle="bold"
         android:textSize="25sp"
         android:textColor="@color/black"/>
 
