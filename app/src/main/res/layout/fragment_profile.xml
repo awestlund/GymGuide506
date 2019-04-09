@@ -9,7 +9,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,14 +21,15 @@
             android:paddingRight="8dp">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageViewProfilePicture"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
-                tools:src="@drawable/qrimage" />
+                tools:src="@drawable/qrimage"
+                android:background="@color/colorPrimary"/>
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textViewUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
@@ -46,10 +48,10 @@
                 android:background="?android:attr/listDivider" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/buttonUpdateStats"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_marginTop="-40dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="-10dp"
@@ -59,7 +61,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textViewWorkoutGoalLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -70,7 +72,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textViewUserWorkoutGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -80,7 +82,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/textViewWorkoutCategoriesLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -91,7 +93,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/textViewWorkoutCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -101,7 +103,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/textViewWorkoutDifficultyLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -112,7 +114,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/textViewWorkoutDifficulty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
