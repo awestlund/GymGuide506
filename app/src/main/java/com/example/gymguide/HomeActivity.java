@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gymguide.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +48,7 @@ public class HomeActivity extends Fragment{
     RecommendedWorkoutsView recWorkoutsAdapter;
     FirebaseFirestore db;
     FirebaseAuth auth;
-
+    
     public HomeActivity() {
         // Required empty public constructor
     }
@@ -74,10 +76,17 @@ public class HomeActivity extends Fragment{
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         Date d = new Date();
-        SimpleDateFormat day = new SimpleDateFormat("EEE, MMM d");
-        TextView dateText = (TextView) rootView.findViewById(R.id.date_textview);
-        dateText.setText(day.format(d));
-        Button T=(Button)rootView.findViewById(R.id.qrcode_button);
+        SimpleDateFormat day = new SimpleDateFormat("d");
+        SimpleDateFormat year = new SimpleDateFormat("y");
+        SimpleDateFormat month = new SimpleDateFormat("MMM");
+        String monthCaps = month.format(d).toString().toUpperCase();
+        TextView dayText = (TextView) rootView.findViewById(R.id.day_textview);
+        TextView monthText = (TextView) rootView.findViewById(R.id.month_textview);
+        TextView yearText = (TextView) rootView.findViewById(R.id.year_textview);
+        dayText.setText(day.format(d));
+        monthText.setText(monthCaps);
+        yearText.setText(year.format(d));
+        ImageButton T = (ImageButton) rootView.findViewById(R.id.qrcode_button);
         T.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -86,6 +95,7 @@ public class HomeActivity extends Fragment{
                 startActivity(i);
             }
         });
+
         if(auth.getCurrentUser() != null) {
             final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
             compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -109,7 +119,8 @@ public class HomeActivity extends Fragment{
                                                 if (task.isSuccessful()) {
                                                     DocumentSnapshot doc = task.getResult();
                                                     Exercise e = new Exercise();
-                                                    e.setExerciseVideoURL(doc.getData().get("exerciseVideoURL").toString());
+                                                    e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
+                                                    e.setExerciseVideoURL(doc.getData().get("exercisePhotoURL").toString());
                                                     e.setEquipmentID(doc.getData().get("equipmentID").toString());
                                                     e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
                                                     e.setExerciseName(doc.getData().get("exerciseName").toString());
@@ -136,13 +147,19 @@ public class HomeActivity extends Fragment{
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
-                                    Exercise e = new Exercise();
-                                    e.setExerciseVideoURL(doc.getData().get("exerciseVideoURL").toString());
-                                    e.setEquipmentID(doc.getData().get("equipmentID").toString());
-                                    e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
-                                    e.setExerciseName(doc.getData().get("exerciseName").toString());
-                                    e.setExerciseID(doc.getId());
-                                    usersRecWorkouts.add(e);
+                                    try {
+                                        Exercise e = new Exercise();
+                                        e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
+                                        e.setEquipmentID(doc.getData().get("equipmentID").toString());
+                                        e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
+                                        e.setExerciseName(doc.getData().get("exerciseName").toString());
+                                        e.setExerciseVideoURL((doc.getData().get("exercisePhotoURL")).toString());
+                                        e.setExerciseID(doc.getId());
+                                        usersRecWorkouts.add(e);
+                                    }
+                                    catch (Exception ex){
+                                        Toast.makeText(getContext(), "Error Loading some workouts", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 recWorkoutsAdapter = new RecommendedWorkoutsView(getContext(), usersRecWorkouts);
                                 recWorkoutsRV.setAdapter(recWorkoutsAdapter);

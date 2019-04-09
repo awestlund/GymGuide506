@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -39,10 +38,13 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
     public void onBindViewHolder(WorkoutViewHolder holder, int position) {
         Exercise s = mExcersises.get(position);
         Bitmap b = null;
+
         try {
-            URL url = new URL(s.getExerciseVideoURL());
+            URL url = new URL(s.getExercisePhotoURL());
             InputStream in = new BufferedInputStream(url.openStream());
             b = BitmapFactory.decodeStream(in);
+            System.out.println(s.getExerciseName());
+            holder.workoutName.setText(s.getExerciseName());
             holder.workoutImage.setImageBitmap(b);
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,8 +58,11 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
 
     public class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView workoutImage;
+        TextView workoutName;
+
         public WorkoutViewHolder(View itemView){
             super(itemView);
+            workoutName = (TextView)itemView.findViewById(R.id.workout_name);
             workoutImage = (ImageView)itemView.findViewById(R.id.workout_image);
             itemView.setOnClickListener(this);
         }
