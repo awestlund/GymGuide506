@@ -71,19 +71,19 @@ public class EquipmentActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot doc : task.getResult()) {
-                                if (doc.getData().get("equipmentID").toString().equals(equipment.getEquipmentID()))
-                                try {
-                                    Exercise e = new Exercise();
-                                    e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
-                                    e.setEquipmentID(doc.getData().get("equipmentID").toString());
-                                    e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
-                                    e.setExerciseName(doc.getData().get("exerciseName").toString());
-                                    e.setExerciseVideoURL((doc.getData().get("exercisePhotoURL")).toString());
-                                    e.setExerciseID(doc.getId());
-                                    equipmentWorkoutsList.add(e);
-                                }
-                                catch (Exception ex){
-                                    Toast.makeText(EquipmentActivity.this, "Error Loading some workouts", Toast.LENGTH_SHORT).show();
+                                if (doc.getData().get("equipmentID").toString().equals(equipment.getEquipmentID())) {
+                                    try {
+                                        Exercise e = new Exercise();
+                                        e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
+                                        e.setEquipmentID(doc.getData().get("equipmentID").toString());
+                                        e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
+                                        e.setExerciseName(doc.getData().get("exerciseName").toString());
+                                        e.setExerciseVideoURL((doc.getData().get("exercisePhotoURL")).toString());
+                                        e.setExerciseID(doc.getId());
+                                        equipmentWorkoutsList.add(e);
+                                    } catch (Exception ex) {
+                                        Toast.makeText(EquipmentActivity.this, "Error Loading some workouts", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                             equipmentWorkoutAdapter = new RecommendedWorkoutsView(EquipmentActivity.this, equipmentWorkoutsList);
