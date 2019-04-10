@@ -71,7 +71,7 @@ public class EquipmentActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot doc : task.getResult()) {
-                                if (doc.getData().get("equipmentID").toString().equals(equipment.getEquipmentID())) {
+                                if ((doc.getData().get("equipmentID").toString()).equals(equipment.getEquipmentID())) {
                                     try {
                                         Exercise e = new Exercise();
                                         e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
@@ -84,6 +84,12 @@ public class EquipmentActivity extends AppCompatActivity {
                                     } catch (Exception ex) {
                                         Toast.makeText(EquipmentActivity.this, "Error Loading some workouts", Toast.LENGTH_SHORT).show();
                                     }
+                                }
+                                else{
+                                    System.out.println("exercise " + doc.getData().get("exerciseName").toString());
+                                    System.out.println("equipmentID " + doc.getData().get("equipmentID").toString());
+                                    System.out.println("thisEquipment " + equipment.getEquipmentID());
+                                    System.out.println();
                                 }
                             }
                             equipmentWorkoutAdapter = new RecommendedWorkoutsView(EquipmentActivity.this, equipmentWorkoutsList);

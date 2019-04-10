@@ -50,13 +50,12 @@ public class QRCodeActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null){
-            if(result.getContents() == null){
+        if(result != null) {
+            if (result.getContents() == null) {
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
 
-            }
-            else{
-                qr_result = result.getContents().trim();
+            } else {
+                    qr_result = result.getContents().trim();
 
 //                Intent intent = new Intent(QRCodeActivity.this, SingleExerciseActivity.class);
 //                Bundle b = new Bundle();
@@ -64,57 +63,64 @@ public class QRCodeActivity extends AppCompatActivity {
 //                intent.putExtras(b);
 //                startActivity(intent);
 //                finish();
-                DocumentReference docRef = db.collection("exercise").document(qr_result);
-                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        Exercise e = null;
-                        if (task.isSuccessful()){
-                            DocumentSnapshot document = task.getResult();
-                            if(document.exists()){
-                                e = document.toObject(Exercise.class);
-                                Intent gotoWorkoutActivityIntent = new Intent(QRCodeActivity.this, SingleExerciseActivity.class);
-                                gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                gotoWorkoutActivityIntent.putExtra("exercise", e);
-                                startActivity(gotoWorkoutActivityIntent );
-                            }else{
-                                isExercise = false;
-                            }
-                        }else{
-                            Toast.makeText(QRCodeActivity.this,"get failed", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
-                if (!isExercise) {
-                    docRef = db.collection("equipment").document(qr_result);
-                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            Equipment e = null;
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    e = document.toObject(Equipment.class);
-                                    Intent gotoWorkoutActivityIntent = new Intent(QRCodeActivity.this, EquipmentActivity.class);
-                                    gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    gotoWorkoutActivityIntent.putExtra("exercise", e);
-                                    startActivity(gotoWorkoutActivityIntent);
+                    try {
+                        DocumentReference docRef = db.collection("exercise").document(qr_result);
+                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                Exercise e = null;
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        e = document.toObject(Exercise.class);
+                                        Intent gotoWorkoutActivityIntent = new Intent(QRCodeActivity.this, SingleExerciseActivity.class);
+                                        gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        gotoWorkoutActivityIntent.putExtra("exercise", e);
+                                        startActivity(gotoWorkoutActivityIntent);
+                                    } else {
+                                        isExercise = false;
+                                    }
                                 } else {
-                                    Toast.makeText(QRCodeActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(QRCodeActivity.this, "get failed", Toast.LENGTH_SHORT).show();
+
                                 }
-                            } else {
-                                Toast.makeText(QRCodeActivity.this, "get failed", Toast.LENGTH_SHORT).show();
                             }
+                        });
+                    } catch (Exception e) {
+                        //TODO
+                    }
+                    try {
+                        if (!isExercise) {
+                            DocumentReference dRef = db.collection("equipment").document(qr_result);
+                            dRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    Equipment e = null;
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            e = document.toObject(Equipment.class);
+                                            e.setEquipmentID(qr_result);
+                                            Intent gotoWorkoutActivityIntent = new Intent(QRCodeActivity.this, EquipmentActivity.class);
+                                            gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            gotoWorkoutActivityIntent.putExtra("equipment", e);
+                                            startActivity(gotoWorkoutActivityIntent);
+                                        } else {
+                                            Toast.makeText(QRCodeActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(QRCodeActivity.this, "get failed", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
-                    });
+                    } catch (Exception e) {
+                        //TODO
+                    }
+
+                    Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+
                 }
-
-        Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-
-        }
-
-
             }
         else {
             super.onActivityResult(requestCode, resultCode, data);
