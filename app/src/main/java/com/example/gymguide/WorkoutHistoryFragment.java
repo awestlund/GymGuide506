@@ -75,7 +75,6 @@ public class WorkoutHistoryFragment extends Fragment {
                     final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.days_completed_workouts_recyclerview);
                     compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
                     final List<Exercise> wh = new ArrayList<>();
-                    compWorkoutsRV.clearAnimation();
                     compWorkoutsRV.setAdapter(null);
                     db.collection("workoutHistory").document(auth.getUid()).collection("History").document(today).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -101,7 +100,6 @@ public class WorkoutHistoryFragment extends Fragment {
                                             }
                                         }
                                     });
-
                                 }
                         }
                         }
