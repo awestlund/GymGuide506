@@ -1,7 +1,9 @@
 package com.example.gymguide;
 import com.google.firebase.firestore.Exclude;
 
-public class Equipment {
+import java.io.Serializable;
+
+public class Equipment implements Serializable {
     String equipmentID;
     String equipmentName;
     String equipmentDescription;
