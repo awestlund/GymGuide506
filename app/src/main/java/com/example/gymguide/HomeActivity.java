@@ -44,7 +44,7 @@ import java.util.Map;
 
 
 public class HomeActivity extends Fragment{
-    public static CompletedWorkoutsView compWorkoutsAdapter;
+    public CompletedWorkoutsView compWorkoutsAdapter;
     RecommendedWorkoutsView recWorkoutsAdapter;
     FirebaseFirestore db;
     FirebaseAuth auth;

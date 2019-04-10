@@ -15,4 +15,33 @@
         android:textColor="@color/colorPrimaryDark"
         />
 
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="30dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/days_completed_workouts_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/workout_history_textview"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="2dp" />
+
+    <TextView
+        android:id="@+id/workout_history_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calendarView"
+        android:layout_alignParentStart="true"
+        android:text="Workouts Completed on this day:"
+        android:textSize="20dp" />
+
 </RelativeLayout>
