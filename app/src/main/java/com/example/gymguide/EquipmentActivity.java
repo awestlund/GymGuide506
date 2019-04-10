@@ -41,6 +41,8 @@ public class EquipmentActivity extends AppCompatActivity {
 
     Equipment equipment;
     private TextView equipmentName;
+    private TextView description_textview;
+    private ImageView imageView;
     FirebaseFirestore db;
     FirebaseAuth auth;
     RecommendedWorkoutsView equipmentWorkoutAdapter;
@@ -50,10 +52,24 @@ public class EquipmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
         equipmentName = findViewById(R.id.equipmentName);
+        description_textview = findViewById(R.id.description_textview);
+        imageView = findViewById(R.id.imageView);
+
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         equipment = (Equipment) getIntent().getSerializableExtra("equipment");
+
         equipmentName.setText(equipment.getEquipmentName());
+        description_textview.setText(equipment.getEquipmentDescription());
+
+        try {
+            URL url = new URL(equipment.equipmentPhotoURL);
+            InputStream in = new BufferedInputStream(url.openStream());
+            Bitmap b = BitmapFactory.decodeStream(in);
+            imageView.setImageBitmap(b);
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
     }
 
 
