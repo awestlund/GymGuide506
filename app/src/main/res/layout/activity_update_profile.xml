@@ -2,15 +2,14 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.gymguide.HomeActivity">
+    tools:context="com.example.gymguide.UpdateProfileActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp">
+       >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,7 +20,7 @@
             android:paddingRight="8dp">
 
             <ImageView
-                android:id="@+id/imageViewProfilePicture"
+                android:id="@+id/imageViewProfilePictureU"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
@@ -29,7 +28,7 @@
                 android:background="@color/colorPrimary"/>
 
             <TextView
-                android:id="@+id/textViewUserName"
+                android:id="@+id/textViewUserNameU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
@@ -48,7 +47,7 @@
                 android:background="?android:attr/listDivider" />
 
             <Button
-                android:id="@+id/buttonUpdateStats"
+                android:id="@+id/buttonUploadPhoto"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="end"
@@ -56,12 +55,12 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="-10dp"
                 android:background="@drawable/button_border"
-                android:text="@string/profile_create_account"
+                android:text="@string/profile_u_upload_photo"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textViewWorkoutGoalLabel"
+                android:id="@+id/textViewWorkoutGoalLabelU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -71,18 +70,23 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textViewUserWorkoutGoal"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/profile_NA"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editTextWorkoutGoal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:hint="@string/profile_u_goal_hint"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray" />
+            </android.support.design.widget.TextInputLayout>
 
             <TextView
-                android:id="@+id/textViewWorkoutCategoriesLabel"
+                android:id="@+id/textViewWorkoutCategoriesLabelU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -92,18 +96,38 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textViewWorkoutCategories"
+            <CheckBox
+                android:id="@+id/checkBoxArms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/profile_NA"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="@string/cat_0" />
+
+            <CheckBox
+                android:id="@+id/checkBoxBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_1" />
+
+            <CheckBox
+                android:id="@+id/checkBoxCardio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_2" />
+
+            <CheckBox
+                android:id="@+id/checkBoxCore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_3" />
+
+            <CheckBox
+                android:id="@+id/checkBoxLegs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_4" />
 
             <TextView
-                android:id="@+id/textViewWorkoutDifficultyLabel"
+                android:id="@+id/textViewWorkoutDifficultyLabelU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -113,25 +137,41 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textViewWorkoutDifficulty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/profile_NA"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
 
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/radioButtonDiffE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/difficulty_E" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonDiffM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/difficulty_M" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonDiffH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/difficulty_H" />
+            </RadioGroup>
 
             <Button
-                android:id="@+id/btnLogout"
+                android:id="@+id/btnUpdateProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/colorPrimary"
-                android:text="@string/profile_login"
+                android:text="@string/profile_u_update"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -141,5 +181,6 @@
 
         </LinearLayout>
     </ScrollView>
+
 
 </android.support.constraint.ConstraintLayout>
