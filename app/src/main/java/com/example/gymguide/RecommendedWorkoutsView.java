@@ -40,10 +40,9 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
         Bitmap b = null;
 
         try {
-            URL url = new URL(s.getExercisePhotoURL());
+            URL url = new URL(s.getExerciseVideoURL());
             InputStream in = new BufferedInputStream(url.openStream());
             b = BitmapFactory.decodeStream(in);
-            System.out.println(s.getExerciseName());
             holder.workoutName.setText(s.getExerciseName());
             holder.workoutImage.setImageBitmap(b);
         } catch (Exception e) {
@@ -73,11 +72,11 @@ public class RecommendedWorkoutsView extends RecyclerView.Adapter<RecommendedWor
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION){
                 e = mExcersises.get(position);
-                //           System.out.println("TEST " + e.getExerciseName());
             }
             Intent gotoWorkoutActivityIntent = new Intent(v.getContext(), SingleExerciseActivity.class);
             gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             gotoWorkoutActivityIntent.putExtra("exercise", e);
+            System.out.println("test id" + e.getExerciseID());
             v.getContext().startActivity(gotoWorkoutActivityIntent );
         }
     }
