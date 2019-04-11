@@ -39,7 +39,7 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
         Exercise s = mExcersises.get(position);
         Bitmap b = null;
         try {
-            URL url = new URL(s.exerciseVideoURL);
+            URL url = new URL(s.exercisePhotoURL);
             InputStream in = new BufferedInputStream(url.openStream());
             b = BitmapFactory.decodeStream(in);
             holder.workoutImage.setImageBitmap(b);
