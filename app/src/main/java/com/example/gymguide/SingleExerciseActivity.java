@@ -11,36 +11,16 @@ import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.view.ViewGroup;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firestore.v1.FirestoreGrpc;
-
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URL;
-
-
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import static java.lang.Thread.sleep;
-
 
 public class SingleExerciseActivity extends AppCompatActivity {
 
@@ -71,6 +51,8 @@ public class SingleExerciseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        auth = FirebaseAuth.getInstance();
+
         TextView workoutName = (TextView) findViewById(R.id.exercise_title);
         workoutName.setText(e.getExerciseName());
 
@@ -97,15 +79,9 @@ public class SingleExerciseActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WorkoutHistory wh = new WorkoutHistory();
-                wh.setUserID(auth.getUid());
-                Date now = new java.util.Date();
-                Timestamp current = new java.sql.Timestamp(now.getTime());
-                wh.setWorkoutDate(current);
-                List<String> exerciseIDs = new ArrayList<>();
-                exerciseIDs.add(e.getExerciseID());
-                wh.setExerciseID(exerciseIDs);
-                db.collection("workoutHistory").add(wh);
+                System.out.println(getIntent().getSerializableExtra("exercise"));
+
+                db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").document(e.getExerciseID()).set(e);
             }
         });
     }

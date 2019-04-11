@@ -68,7 +68,13 @@ public class HomeActivity extends Fragment{
         }
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(compWorkoutsAdapter != null){
+            compWorkoutsAdapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,42 +102,40 @@ public class HomeActivity extends Fragment{
             }
         });
 
+
+
         if(auth.getCurrentUser() != null) {
             final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
             compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-            CollectionReference compWorkouts = db.collection("workoutHistory");
-            compWorkouts.whereEqualTo("userID", auth.getUid());
-            compWorkouts.whereEqualTo("userID", auth.getUid());
-            db.collection("workoutHistory").whereEqualTo("userID", auth.getUid()).get()
+            final List<Exercise> wh = new ArrayList<>();
+            //start test change path
+            db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
+                            if (task.isSuccessful() && task != null) {
                                 final List<Exercise> userCompExcerciseList = new ArrayList<>();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    ArrayList<String> temp = (ArrayList<String>) document.get("exerciseID");
-                                    for(int i=0; i<temp.size(); i++){
-                                        String s = temp.get(i);
-                                        final DocumentReference docRef = db.collection("exercise").document(s.trim());
-                                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    DocumentSnapshot doc = task.getResult();
-                                                    Exercise e = new Exercise();
-                                                    e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
-                                                    e.setExerciseVideoURL(doc.getData().get("exercisePhotoURL").toString());
-                                                    e.setEquipmentID(doc.getData().get("equipmentID").toString());
-                                                    e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
-                                                    e.setExerciseName(doc.getData().get("exerciseName").toString());
+                                    String s = document.getId();
+                                    DocumentReference docRef = db.collection("exercise").document(s);
+                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            DocumentSnapshot ds = task.getResult();
+                                            Exercise e = null;
+                                            if (task.isSuccessful() && task != null) {
+
+                                                DocumentSnapshot doc = task.getResult();
+                                                if (doc.exists()) {
+                                                    e = doc.toObject(Exercise.class);
                                                     e.setExerciseID(doc.getId());
-                                                    userCompExcerciseList.add(e);
-                                                    compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), userCompExcerciseList);
-                                                    compWorkoutsRV.setAdapter(compWorkoutsAdapter);
+                                                    wh.add(e);
                                                 }
+                                                compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), wh);
+                                                compWorkoutsRV.setAdapter(compWorkoutsAdapter);
                                             }
-                                        });
-                                    }
+                                        }
+                                    });
                                 }
                             }
                         }
@@ -148,12 +152,7 @@ public class HomeActivity extends Fragment{
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
                                     try {
-                                        Exercise e = new Exercise();
-                                        e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
-                                        e.setEquipmentID(doc.getData().get("equipmentID").toString());
-                                        e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
-                                        e.setExerciseName(doc.getData().get("exerciseName").toString());
-                                        e.setExerciseVideoURL((doc.getData().get("exercisePhotoURL")).toString());
+                                        Exercise e = doc.toObject(Exercise.class);
                                         e.setExerciseID(doc.getId());
                                         usersRecWorkouts.add(e);
                                     }
@@ -193,8 +192,6 @@ public class HomeActivity extends Fragment{
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            //your codes here
-
         }
     }
 }
