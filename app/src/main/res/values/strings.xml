@@ -10,4 +10,29 @@
     <string name="action_sign_in_short">Register</string>
     <string name="btn_link_to_login">Already registered. Login Me!</string>
     <string name="title_activity_single_exercise_activty">SingleExerciseActivty</string>
+    //Profile
+    <string name="profile_userName">Guest User</string>
+    <string name="profile_NA">N/A</string>
+    <string name="profile_workout_goal">Workout Goal</string>
+    <string name="profile_workout_categories">Workout Categories</string>
+    <string name="profile_workout_difficulty">Workout Difficulty</string>
+    <string name="profile_create_account">CREATE ACCOUNT</string>
+    <string name="profile_login">LOGIN</string>
+    //Profile Update
+    <string name="profile_u_upload_photo">UPLOAD PHOTO</string>
+    <string name="profile_u_update">UPDATE</string>
+    <string name="profile_u_goal_hint">Enter your workout goals...</string>
+
+    //Categories
+    <string name="cat_0">Arms</string>
+    <string name="cat_1">Back</string>
+    <string name="cat_2">Cardio</string>
+    <string name="cat_3">Core</string>
+    <string name="cat_4">Legs</string>
+
+    //Difficulty
+    <string name="difficulty_E">Easy</string>
+    <string name="difficulty_M">Medium</string>
+    <string name="difficulty_H">Hard</string>
+
 </resources>

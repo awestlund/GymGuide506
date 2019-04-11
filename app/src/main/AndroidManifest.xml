@@ -14,6 +14,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".EquipmentActivity"></activity>
+        <activity android:name=".UpdateProfileActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".WorkoutListActivity" />
         <activity
             android:name=".SingleExerciseActivity"

@@ -1,9 +1,10 @@
 package com.example.gymguide;
 import com.google.firebase.firestore.Exclude;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     String userID;
     String userName;
     String userEmail;
