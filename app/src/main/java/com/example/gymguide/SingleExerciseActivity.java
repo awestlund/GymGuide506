@@ -74,6 +74,17 @@ public class SingleExerciseActivity extends AppCompatActivity {
             }
         });
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //check to see if the workout is in the database for today already
+                //do not add if it is already present
+                db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").document(e.getExerciseID()).set(e);
+
+                Toast.makeText(SingleExerciseActivity.this, "Added to Workout History", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
@@ -93,20 +104,6 @@ public class SingleExerciseActivity extends AppCompatActivity {
         } catch (Exception x) {
             x.printStackTrace();
         }
-
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //check to see if the workout is in the database for today already
-                //do not add if it is already present
-                db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").document(e.getExerciseID()).set(e);
-
-                Toast.makeText(SingleExerciseActivity.this, "Added to Workout History", Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
 
 
