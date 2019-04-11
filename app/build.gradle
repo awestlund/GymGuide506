@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "gym.guide.package"
+        applicationId "com.example.gymguide"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -41,5 +41,6 @@ dependencies {
     implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 }
 apply plugin: 'com.google.gms.google-services'

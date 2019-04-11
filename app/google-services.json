@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:250497151294:android:a9aebfbaf4ae53d1",
+        "android_client_info": {
+          "package_name": "com.example.gymguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250497151294-rdro7f9n62qfn48lhppb5pa14ju11h21.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWNTXTEgTOiSHzUJI24TCPdKSbmd2PWUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250497151294-rdro7f9n62qfn48lhppb5pa14ju11h21.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:250497151294:android:76d27f2aaacd281a",
         "android_client_info": {
           "package_name": "gym.guide.package"
@@ -25,15 +54,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250497151294-rdro7f9n62qfn48lhppb5pa14ju11h21.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
