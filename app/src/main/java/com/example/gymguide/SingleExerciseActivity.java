@@ -99,18 +99,10 @@ public class SingleExerciseActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WorkoutHistory wh = new WorkoutHistory();
-                wh.setUserID(auth.getUid());
-                Date now = new java.util.Date();
-
                 //check to see if the workout is in the database for today already
                 //do not add if it is already present
-                Timestamp current = new java.sql.Timestamp(now.getTime());
-                wh.setWorkoutDate(current);
-                List<String> exerciseIDs = new ArrayList<>();
-                exerciseIDs.add(e.getExerciseID());
-                wh.setExerciseID(exerciseIDs);
-                db.collection("workoutHistory").add(wh);
+                db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").document(e.getExerciseID()).set(e);
+
                 Toast.makeText(SingleExerciseActivity.this, "Added to Workout History", Toast.LENGTH_SHORT).show();
 
             }
