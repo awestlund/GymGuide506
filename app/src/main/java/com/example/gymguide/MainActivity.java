@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-//    private Button btnQR;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +56,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-//        btnQR.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, QRCodeActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
