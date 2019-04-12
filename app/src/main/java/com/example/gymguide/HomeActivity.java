@@ -106,7 +106,7 @@ public class HomeActivity extends Fragment{
             }
         });
 
-        Button finishWorkoutButton = (Button) rootView.findViewById(R.id.finish_workout_button);
+        Button finishWorkoutButton = (Button) rootView.findViewById(R.id.finish_button);
         finishWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
