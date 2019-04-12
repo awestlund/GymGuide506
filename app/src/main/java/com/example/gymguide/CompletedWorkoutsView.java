@@ -3,7 +3,7 @@ package com.example.gymguide;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,16 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
 public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkoutsView.WorkoutViewHolder> {
 
     private List<Exercise> mExcersises;
     public Context mContext;
+    ViewGroup parent;
 
     public CompletedWorkoutsView(Context context, List<Exercise> excersises){
         this.mExcersises = excersises;
@@ -31,6 +28,7 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
     @Override
     public WorkoutViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.completed_workout_list_item, parent, false);
+        this.parent = parent;
         return new WorkoutViewHolder(view);
     }
 
@@ -39,11 +37,11 @@ public class CompletedWorkoutsView extends RecyclerView.Adapter<CompletedWorkout
         Exercise s = mExcersises.get(position);
         Bitmap b = null;
         try {
-            URL url = new URL(s.exercisePhotoURL);
-            InputStream in = new BufferedInputStream(url.openStream());
-            b = BitmapFactory.decodeStream(in);
-            holder.workoutImage.setImageBitmap(b);
+            String url = s.getExercisePhotoURL();
+            int imageID = parent.getContext().getResources().getIdentifier(url, "drawable",parent.getContext().getPackageName() );
+            Drawable d = parent.getResources().getDrawable(imageID);
             holder.workoutName.setText(s.getExerciseName());
+            holder.workoutImage.setImageDrawable(d);
         } catch (Exception e) {
             e.printStackTrace();
         }

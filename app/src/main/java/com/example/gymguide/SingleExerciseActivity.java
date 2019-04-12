@@ -3,6 +3,7 @@ package com.example.gymguide;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -97,10 +98,11 @@ public class SingleExerciseActivity extends AppCompatActivity {
         workoutDescription.setText(Html.fromHtml(e.getExerciseDescription().toString()));
 
         try {
-            URL url = new URL(e.getExercisePhotoURL());
-            InputStream in = new BufferedInputStream(url.openStream());
-            Bitmap b = BitmapFactory.decodeStream(in);
-            workoutImage.setImageBitmap(b);
+            String url = e.getExercisePhotoURL();
+            int imageID = getResources().getIdentifier(url, "drawable",getPackageName());
+            Drawable d = getDrawable(imageID);
+            workoutImage.setImageDrawable(d);
+            workoutImage.setImageDrawable(d);
         } catch (Exception x) {
             x.printStackTrace();
         }
