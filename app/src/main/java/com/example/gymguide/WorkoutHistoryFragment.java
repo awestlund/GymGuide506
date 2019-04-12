@@ -80,9 +80,9 @@ public class WorkoutHistoryFragment extends Fragment {
                         @Override
                         public void onComplete( Task<DocumentSnapshot> task) {
                             DocumentSnapshot d = task.getResult();
-                            List<String> exercies = (List<String>) d.get("exerciseID");
-                            if (exercies != null){
-                                for (String s : exercies) {
+                            List<String> exercises = (List<String>) d.get("exerciseID");
+                            if (exercises != null){
+                                for (String s : exercises) {
                                     DocumentReference docRef = db.collection("exercise").document(s);
                                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                         @Override
@@ -95,8 +95,8 @@ public class WorkoutHistoryFragment extends Fragment {
                                                     e = document.toObject(Exercise.class);
                                                     wh.add(e);
                                                 }
-                                            compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), wh);
-                                            compWorkoutsRV.setAdapter(compWorkoutsAdapter);
+                                                compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), wh);
+                                                compWorkoutsRV.setAdapter(compWorkoutsAdapter);
                                             }
                                         }
                                     });
