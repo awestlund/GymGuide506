@@ -3,6 +3,7 @@ package com.example.gymguide;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -74,6 +75,17 @@ public class SingleExerciseActivity extends AppCompatActivity {
             }
         });
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //check to see if the workout is in the database for today already
+                //do not add if it is already present
+                db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").document(e.getExerciseID()).set(e);
+
+                Toast.makeText(SingleExerciseActivity.this, "Added to current workout", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
@@ -86,35 +98,14 @@ public class SingleExerciseActivity extends AppCompatActivity {
         workoutDescription.setText(Html.fromHtml(e.getExerciseDescription().toString()));
 
         try {
-            URL url = new URL(e.getExercisePhotoURL());
-            InputStream in = new BufferedInputStream(url.openStream());
-            Bitmap b = BitmapFactory.decodeStream(in);
-            workoutImage.setImageBitmap(b);
+            String url = e.getExercisePhotoURL();
+            int imageID = getResources().getIdentifier(url, "drawable",getPackageName());
+            Drawable d = getDrawable(imageID);
+            workoutImage.setImageDrawable(d);
+            workoutImage.setImageDrawable(d);
         } catch (Exception x) {
             x.printStackTrace();
         }
-
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WorkoutHistory wh = new WorkoutHistory();
-                wh.setUserID(auth.getUid());
-                Date now = new java.util.Date();
-
-                //check to see if the workout is in the database for today already
-                //do not add if it is already present
-                Timestamp current = new java.sql.Timestamp(now.getTime());
-                wh.setWorkoutDate(current);
-                List<String> exerciseIDs = new ArrayList<>();
-                exerciseIDs.add(e.getExerciseID());
-                wh.setExerciseID(exerciseIDs);
-                db.collection("workoutHistory").add(wh);
-                Toast.makeText(SingleExerciseActivity.this, "Added to Workout History", Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
 
 
