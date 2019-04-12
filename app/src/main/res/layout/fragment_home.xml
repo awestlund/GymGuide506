@@ -12,8 +12,8 @@
         android:layout_height="120dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="49dp"
+        android:layout_marginStart="102dp"
+        android:layout_marginTop="8dp"
         android:text="17"
         android:textColor="@color/gray"
         android:textSize="70sp"
@@ -25,8 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="49dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="8dp"
         android:text="MAY"
         android:textColor="@color/gray"
         android:textSize="35sp"
@@ -35,11 +35,11 @@
     <TextView
         android:id="@+id/year_textview"
         android:layout_width="wrap_content"
-        android:layout_height="109dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="95dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="58dp"
         android:text="2019"
         android:textColor="@color/gray"
         android:textSize="35sp"
@@ -127,5 +127,15 @@
         android:text="workoutName"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp" />
+
+    <Button
+        android:id="@+id/finish_workout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="120dp"
+        android:text="Finish Workout" />
 
 </RelativeLayout>

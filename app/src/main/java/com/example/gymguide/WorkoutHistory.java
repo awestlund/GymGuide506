@@ -1,8 +1,9 @@
 package com.example.gymguide;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.Exclude;
 
-import java.sql.Timestamp;
+
 import java.util.List;
 
 public class WorkoutHistory  {

@@ -21,11 +21,13 @@ import android.widget.Toast;
 import com.example.gymguide.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -48,7 +50,9 @@ public class HomeActivity extends Fragment{
     RecommendedWorkoutsView recWorkoutsAdapter;
     FirebaseFirestore db;
     FirebaseAuth auth;
-    
+    List<String> currWorkout = new ArrayList<String>();
+
+
     public HomeActivity() {
         // Required empty public constructor
     }
@@ -102,19 +106,62 @@ public class HomeActivity extends Fragment{
             }
         });
 
+        Button finishWorkoutButton = (Button) rootView.findViewById(R.id.finish_workout_button);
+        finishWorkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful() && task != null) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        String s = document.getId();
+                                        currWorkout.add(s);
 
+                                    }
+
+                                    Date d = new Date();
+                                    SimpleDateFormat day = new SimpleDateFormat("dd");
+                                    SimpleDateFormat year = new SimpleDateFormat("yyyy");
+                                    SimpleDateFormat month = new SimpleDateFormat("MM");
+                                    String today = month.format(d) + day.format(d) + year.format(d);
+
+                                    WorkoutHistory curr = new WorkoutHistory(" ", new Timestamp(new Date()),
+                                            currWorkout, auth.getUid());
+                                    db.collection("workoutHistory").document(auth.getUid()).collection("History")
+                                            .document(today).set(curr);
+                                    db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot doc : task.getResult()) {
+                                                            db.collection("workoutHistory").document(auth.getUid()).
+                                                                    collection("CurrentWorkout").document(doc.getId()).delete();
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                }
+                            }
+                        });
+
+                Toast.makeText(getActivity(), "Added this workout to your history", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         if(auth.getCurrentUser() != null) {
             final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
             compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
             final List<Exercise> wh = new ArrayList<>();
-            //start test change path
             db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful() && task != null) {
-                                final List<Exercise> userCompExcerciseList = new ArrayList<>();
+//                                final List<Exercise> userCompExcerciseList = new ArrayList<>();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     String s = document.getId();
                                     DocumentReference docRef = db.collection("exercise").document(s);

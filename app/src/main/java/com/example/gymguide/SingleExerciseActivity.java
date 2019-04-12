@@ -81,7 +81,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
                 //do not add if it is already present
                 db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").document(e.getExerciseID()).set(e);
 
-                Toast.makeText(SingleExerciseActivity.this, "Added to Workout History", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SingleExerciseActivity.this, "Added to current workout", Toast.LENGTH_SHORT).show();
 
             }
         });
