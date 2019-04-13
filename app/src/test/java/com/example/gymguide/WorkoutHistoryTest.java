@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class WorkoutHistoryTest {
     @Test
     public void initWorkoutHistory() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
         WorkoutHistory workoutHistory=new WorkoutHistory();
         assertEquals(null,workoutHistory.getExerciseID());
         assertEquals(null,workoutHistory.getHistoryID());
@@ -25,8 +26,11 @@ public class WorkoutHistoryTest {
 //        System.out.print(current);
         Timestamp ts = new Timestamp(new Date());
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
             Date parsedDate = dateFormat.parse("2019-04-08 17:16:57.092");
+            long ms = System.currentTimeMillis();
+            int s = (int) System.currentTimeMillis()/1000;
+
             ts = new Timestamp(parsedDate);
 
         } catch(Exception e) { //this generic but you can control another types of exception
@@ -37,14 +41,18 @@ public class WorkoutHistoryTest {
         list.add("b");
         list.add("c");
 
+        try {
+            workoutHistory = new WorkoutHistory("historyID", ts, list, "userID");
+            assertEquals("historyID", workoutHistory.getHistoryID());
+            assertEquals("2019-04-08 17:16:57.092", dateFormat.parse(workoutHistory.getWorkoutDate().toString()));
+            assertEquals("a", workoutHistory.getExerciseID().get(0));
+            assertEquals("b", workoutHistory.getExerciseID().get(1));
+            assertEquals("c", workoutHistory.getExerciseID().get(2));
+            assertEquals("userID", workoutHistory.getUserID());
+        }
+        catch(Exception e){
 
-        workoutHistory=new WorkoutHistory( "historyID", ts, list, "userID");
-        assertEquals("historyID",workoutHistory.getHistoryID());
-        assertEquals("2019-04-08 17:16:57.092",workoutHistory.getWorkoutDate().toString());
-        assertEquals("a",workoutHistory.getExerciseID().get(0));
-        assertEquals("b",workoutHistory.getExerciseID().get(1));
-        assertEquals("c",workoutHistory.getExerciseID().get(2));
-        assertEquals("userID",workoutHistory.getUserID());
+        }
 
 
         System.out.println("workoutHistory get methods passed");
@@ -54,27 +62,31 @@ public class WorkoutHistoryTest {
         list2.add("c123");
         Timestamp ts2 = new Timestamp(new Date());
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+            //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
             Date parsedDate = dateFormat.parse("2018-03-07 16:15:56.012");
             // short time = (short) parsedDate.getTime();
+            long ms = System.currentTimeMillis();
+            int s = (int) System.currentTimeMillis()/1000;
             ts2 = new Timestamp(parsedDate);
         } catch(Exception e) { //this generic but you can control another types of exception
             // look the origin of exception
         }
 
-
-
         workoutHistory.setExerciseID(list2);
         workoutHistory.setHistoryID(workoutHistory.getHistoryID()+"123");
         workoutHistory.setUserID(workoutHistory.getUserID()+"123");
         workoutHistory.setWorkoutDate(ts2);
+        try{
+            assertEquals("historyID123",workoutHistory.getHistoryID());
+            assertEquals("2018-03-07 16:15:56.012",dateFormat.parse(workoutHistory.getWorkoutDate().toString()));
+            assertEquals("a123",workoutHistory.getExerciseID().get(0));
+            assertEquals("b123",workoutHistory.getExerciseID().get(1));
+            assertEquals("c123",workoutHistory.getExerciseID().get(2));
+            assertEquals("userID123",workoutHistory.getUserID());
+        }
+        catch(Exception e){
 
-        assertEquals("historyID123",workoutHistory.getHistoryID());
-        assertEquals("2018-03-07 16:15:56.012",workoutHistory.getWorkoutDate().toString());
-        assertEquals("a123",workoutHistory.getExerciseID().get(0));
-        assertEquals("b123",workoutHistory.getExerciseID().get(1));
-        assertEquals("c123",workoutHistory.getExerciseID().get(2));
-        assertEquals("userID123",workoutHistory.getUserID());
+        }
 
         System.out.println("workoutHistory set methods passed");
 
