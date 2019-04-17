@@ -1,8 +1,6 @@
 package com.example.gymguide;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,34 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.view.ViewGroup;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+import android.webkit.WebChromeClient;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firestore.v1.FirestoreGrpc;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.URL;
-
-
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static java.lang.Thread.sleep;
 
@@ -46,7 +31,7 @@ import static java.lang.Thread.sleep;
 public class SingleExerciseActivity extends AppCompatActivity {
 
     Exercise e;
-    ImageView workoutImage;
+//    ImageView workoutImage;
     VideoView videoPlayerView;
         DisplayMetrics dm;
         MediaController mc;
@@ -55,6 +40,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
     FirebaseFirestore db;
     FirebaseAuth auth;
     Button btnVideo;
+    WebView videoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,15 +49,21 @@ public class SingleExerciseActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         e = (Exercise) getIntent().getSerializableExtra("exercise");
-        workoutImage = findViewById(R.id.imageView);
         fab = findViewById(R.id.btnAddWorkout);
         btnVideo = findViewById(R.id.btn_video);
+
+        String url = e.getExercisePhotoURL();
+        videoView = findViewById(R.id.workout_video);
+        videoView.getSettings().setJavaScriptEnabled(true);
+        videoView.setWebChromeClient(new WebChromeClient() {} );
+        videoView.loadData(e.getExerciseVideoURL(), "text/html" , "utf-8");
 
         btnVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(e.getExerciseVideoURL())));
-                Log.i("Video", "Video Playing....");
+//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(e.getExerciseVideoURL())));
+//                Log.i("Video", "Video Playing....");
+
             }
         });
 
@@ -99,10 +91,9 @@ public class SingleExerciseActivity extends AppCompatActivity {
 
         try {
             String url = e.getExercisePhotoURL();
-            int imageID = getResources().getIdentifier(url, "drawable",getPackageName());
-            Drawable d = getDrawable(imageID);
-            workoutImage.setImageDrawable(d);
-            workoutImage.setImageDrawable(d);
+//            int imageID = getResources().getIdentifier(url, "drawable",getPackageName());
+//            Drawable d = getDrawable(imageID);
+//            workoutImage.setImageDrawable(d);
         } catch (Exception x) {
             x.printStackTrace();
         }

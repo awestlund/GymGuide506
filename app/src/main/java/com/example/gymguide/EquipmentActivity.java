@@ -1,26 +1,16 @@
 package com.example.gymguide;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,9 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class EquipmentActivity extends AppCompatActivity {
@@ -53,7 +41,7 @@ public class EquipmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_equipment);
         equipmentName = findViewById(R.id.equipmentName);
         description_textview = findViewById(R.id.description_textview);
-        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.workout_video);
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
