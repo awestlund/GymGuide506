@@ -75,8 +75,8 @@ public class ProfileActivity extends Fragment{
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
 
-        logout =(Button)rootView.findViewById(R.id.btnLogout);
-        updateProfile = rootView.findViewById(R.id.buttonUpdateStats);
+        logout = (Button)rootView.findViewById(R.id.btnLogout);
+        updateProfile = (Button)rootView.findViewById(R.id.buttonUpdateStats);
         profilePhotos = rootView.findViewById(R.id.imageViewProfilePicture);
         userName = rootView.findViewById(R.id.textViewUserName);
         userGoal = rootView.findViewById(R.id.textViewUserWorkoutGoal);
@@ -184,7 +184,7 @@ public class ProfileActivity extends Fragment{
                         }
                     });
         } else {
-            //Set blank profile photo
+            //Set blank profile photo Guest User
             Glide.with(ProfileActivity.this)
                     .load(R.drawable.blank_profile)
                     .into(profilePhotos);

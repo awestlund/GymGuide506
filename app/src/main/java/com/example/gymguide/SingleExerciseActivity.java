@@ -39,7 +39,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
     FloatingActionButton fab;
     FirebaseFirestore db;
     FirebaseAuth auth;
-    Button btnVideo;
+//    Button btnVideo;
     WebView videoView;
 
     @Override
@@ -50,7 +50,7 @@ public class SingleExerciseActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         e = (Exercise) getIntent().getSerializableExtra("exercise");
         fab = findViewById(R.id.btnAddWorkout);
-        btnVideo = findViewById(R.id.btn_video);
+//        btnVideo = findViewById(R.id.btn_video);
 
         String url = e.getExercisePhotoURL();
         videoView = findViewById(R.id.workout_video);
@@ -58,14 +58,14 @@ public class SingleExerciseActivity extends AppCompatActivity {
         videoView.setWebChromeClient(new WebChromeClient() {} );
         videoView.loadData(e.getExerciseVideoURL(), "text/html" , "utf-8");
 
-        btnVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(e.getExerciseVideoURL())));
-//                Log.i("Video", "Video Playing....");
-
-            }
-        });
+//        btnVideo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(e.getExerciseVideoURL())));
+////                Log.i("Video", "Video Playing....");
+//
+//            }
+//        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
