@@ -1,5 +1,5 @@
 # GymGuide506
-Iteration 1 Procedure and Instructions
+Iteration 3 Procedure and Instructions
 
 Megan Quinlan, Brian Newberry, Amber Westlund, Andy Zhang, Dave Nugent, Yudong Chen, Nick Timmons
 
@@ -10,9 +10,9 @@ Requirements to run code:
 Step 1: Clone repository into Android Studio
 https://github.com/awestlund/GymGuide506/ (our repository is public)
 
-Step 2: Checkout branch called master with tag iteration_2 on within GitHub repository 
+Step 2: Checkout branch called master with tag iteration_3 on within GitHub repository 
 https://github.com/awestlund/GymGuide506/tree/master
-  Here is the Iteration 2 tag: https://github.com/awestlund/GymGuide506/releases/tag/iteration_2
+  Here is the Iteration 2 tag: https://github.com/awestlund/GymGuide506/releases/tag/iteration_3
 
 Step 3: Build project and verify there are no issues when building
 
@@ -45,4 +45,4 @@ Step 6:  In order to run tests you can either choose the run configuration to ru
 
 
 Google Doc For This Procedure:
-https://docs.google.com/document/d/1JLx3s_ww-_c3DT50IYoDnWCDdcGpbmr0GQ3se7mHIZ0/edit#
+https://docs.google.com/document/d/1YHUrZPEKSgGGaPumtzVCzGaFMV9YZ__vDgxy-fhU73k/edit?usp=sharing
