@@ -12,7 +12,7 @@ https://github.com/awestlund/GymGuide506/ (our repository is public)
 
 Step 2: Checkout branch called master with tag iteration_3 on within GitHub repository 
 https://github.com/awestlund/GymGuide506/tree/master
-  Here is the Iteration 2 tag: https://github.com/awestlund/GymGuide506/releases/tag/iteration_3
+  Here is the Iteration 3 tag: https://github.com/awestlund/GymGuide506/releases/tag/iteration_3
 
 Step 3: Build project and verify there are no issues when building
 
