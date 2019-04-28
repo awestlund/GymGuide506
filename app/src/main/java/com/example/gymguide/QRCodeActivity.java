@@ -97,7 +97,6 @@ public class QRCodeActivity extends AppCompatActivity {
                 //TODO
             }
             try {
-                if (!isExercise) {
                     DocumentReference dRef = db.collection("equipment").document(qr_result);
                     dRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -108,10 +107,10 @@ public class QRCodeActivity extends AppCompatActivity {
                                 if (document.exists()) {
                                     e = document.toObject(Equipment.class);
                                     e.setEquipmentID(qr_result);
-                                    Intent gotoWorkoutActivityIntent = new Intent(QRCodeActivity.this, EquipmentActivity.class);
-                                    gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    gotoWorkoutActivityIntent.putExtra("equipment", e);
-                                    startActivity(gotoWorkoutActivityIntent);
+                                    Intent gotoEquipmentActivityIntent = new Intent(QRCodeActivity.this, EquipmentActivity.class);
+                                    gotoEquipmentActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    gotoEquipmentActivityIntent.putExtra("equipment", e);
+                                    startActivity(gotoEquipmentActivityIntent);
                                 } else {
                                     isEquipment = false;
                                 }
@@ -120,7 +119,6 @@ public class QRCodeActivity extends AppCompatActivity {
                             }
                         }
                     });
-                }
             } catch (Exception e) {
                 Toast.makeText(QRCodeActivity.this, "Incorrect Input", Toast.LENGTH_SHORT).show();
             }
@@ -163,7 +161,6 @@ public class QRCodeActivity extends AppCompatActivity {
                         //TODO
                     }
                     try {
-                        if (!isExercise) {
                             DocumentReference dRef = db.collection("equipment").document(qr_result);
                             dRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
@@ -186,14 +183,10 @@ public class QRCodeActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
                         //TODO
-                    }
-                    if (!isExercise && !isEquipment) {
-                        Toast.makeText(this, "scan failed, please rescan", Toast.LENGTH_LONG).show();
                     }
 
                 }
