@@ -129,6 +129,9 @@ public class ProfileActivity extends Fragment{
 
                                     userCategories.setText(catList);
                                 }
+                                if (catList.isEmpty()){
+                                    userCategories.setText("N/A");
+                                }
 
 
 
