@@ -27,6 +27,7 @@ public class QRCodeActivity extends AppCompatActivity {
     private String userInput = "";
     private FirebaseFirestore db;
     boolean isExercise = true;
+    boolean isEquipment = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +113,7 @@ public class QRCodeActivity extends AppCompatActivity {
                                     gotoWorkoutActivityIntent.putExtra("equipment", e);
                                     startActivity(gotoWorkoutActivityIntent);
                                 } else {
-                                    Toast.makeText(QRCodeActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+                                    isEquipment = false;
                                 }
                             } else {
                                 Toast.makeText(QRCodeActivity.this, "get failed", Toast.LENGTH_SHORT).show();
@@ -173,12 +174,12 @@ public class QRCodeActivity extends AppCompatActivity {
                                         if (document.exists()) {
                                             e = document.toObject(Equipment.class);
                                             e.setEquipmentID(qr_result);
-                                            Intent gotoWorkoutActivityIntent = new Intent(QRCodeActivity.this, EquipmentActivity.class);
-                                            gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            gotoWorkoutActivityIntent.putExtra("equipment", e);
-                                            startActivity(gotoWorkoutActivityIntent);
+                                            Intent gotoEquipmentActivityIntent = new Intent(QRCodeActivity.this, EquipmentActivity.class);
+                                            gotoEquipmentActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            gotoEquipmentActivityIntent.putExtra("equipment", e);
+                                            startActivity(gotoEquipmentActivityIntent);
                                         } else {
-                                            Toast.makeText(QRCodeActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+                                            isEquipment = false;
                                         }
                                     } else {
                                         Toast.makeText(QRCodeActivity.this, "get failed", Toast.LENGTH_SHORT).show();
@@ -187,10 +188,13 @@ public class QRCodeActivity extends AppCompatActivity {
                             });
                         }
                     } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
                         //TODO
                     }
-
-                    Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                    if (!isExercise && !isEquipment) {
+                        Toast.makeText(this, "scan failed, please rescan", Toast.LENGTH_LONG).show();
+                    }
 
                 }
             }

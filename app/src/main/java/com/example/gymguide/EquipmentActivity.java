@@ -78,11 +78,11 @@ public class EquipmentActivity extends AppCompatActivity {
                                 if ((doc.getData().get("equipmentID").toString()).equals(equipment.getEquipmentID())) {
                                     try {
                                         Exercise e = new Exercise();
-                                        e.setExercisePhotoURL(doc.getData().get("exerciseVideoURL").toString());
+                                        e.setExercisePhotoURL(doc.getData().get("exercisePhotoURL").toString());
                                         e.setEquipmentID(doc.getData().get("equipmentID").toString());
                                         e.setExerciseDescription(doc.getData().get("exerciseDescription").toString());
                                         e.setExerciseName(doc.getData().get("exerciseName").toString());
-                                        e.setExerciseVideoURL((doc.getData().get("exercisePhotoURL")).toString());
+                                        e.setExerciseVideoURL((doc.getData().get("exerciseVideoURL")).toString());
                                         e.setExerciseID(doc.getId());
                                         equipmentWorkoutsList.add(e);
                                     } catch (Exception ex) {
