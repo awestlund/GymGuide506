@@ -107,15 +107,20 @@ public class ProfileActivity extends Fragment{
 
                                 if(userDetails.getUserWorkoutGoal() != "") {
                                     userGoal.setText(userDetails.getUserWorkoutGoal());
+                                } else{
+                                    userGoal.setText("No goal set yet!");
                                 }
                                 if(userDetails.getWorkoutDifficulty() != "") {
                                     userDifficulty.setText(userDetails.getWorkoutDifficulty());
+                                } else{
+                                    userDifficulty.setText("No difficulty set yet!");
                                 }
+
 
                                 String catList = "";
                                 boolean first = true;
 
-                                if(userDetails.getWorkoutCategory() != null) {
+                                if(userDetails.getWorkoutCategory().equals("")) {
 
                                     for (String category : userDetails.getWorkoutCategory()) {
                                         category = category.trim();
@@ -128,6 +133,8 @@ public class ProfileActivity extends Fragment{
                                     }
 
                                     userCategories.setText(catList);
+                                } else{
+                                    userCategories.setText("No categories set yet!");
                                 }
 
 
