@@ -1,5 +1,7 @@
 package com.example.gymguide;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -58,14 +60,6 @@ public class SingleExerciseActivity extends AppCompatActivity {
         videoView.setWebChromeClient(new WebChromeClient() {} );
         videoView.loadData(e.getExerciseVideoURL(), "text/html" , "utf-8");
 
-//        btnVideo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(e.getExerciseVideoURL())));
-////                Log.i("Video", "Video Playing....");
-//
-//            }
-//        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
