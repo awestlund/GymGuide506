@@ -178,7 +178,7 @@ public class QRCodeActivity extends AppCompatActivity {
                                             gotoWorkoutActivityIntent.putExtra("equipment", e);
                                             startActivity(gotoWorkoutActivityIntent);
                                         } else {
-                                            Toast.makeText(QRCodeActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(QRCodeActivity.this, "No such document", Toast.LENGTH_SHORT).show();
                                         }
                                     } else {
                                         Toast.makeText(QRCodeActivity.this, "get failed", Toast.LENGTH_SHORT).show();

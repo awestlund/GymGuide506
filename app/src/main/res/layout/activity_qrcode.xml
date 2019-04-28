@@ -36,18 +36,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="251dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="440dp"
+        android:layout_width="317dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="444dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/typedQR"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="348dp"
+            android:layout_height="49dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="512dp"
             android:layout_marginBottom="10dp"
             android:hint="Type QR Code"
             android:textColor="@color/black"
@@ -60,7 +62,7 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="512dp"
+        android:layout_marginTop="520dp"
         android:background="@color/gray"
         android:text="SUBMIT TEXT"
         android:textColor="@color/white"
