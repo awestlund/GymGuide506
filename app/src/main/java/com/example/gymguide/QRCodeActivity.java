@@ -144,6 +144,7 @@ public class QRCodeActivity extends AppCompatActivity {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         e = document.toObject(Exercise.class);
+                                        e.setExerciseID(document.getId());
                                         Intent gotoWorkoutActivityIntent = new Intent(QRCodeActivity.this, SingleExerciseActivity.class);
                                         gotoWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         gotoWorkoutActivityIntent.putExtra("exercise", e);
