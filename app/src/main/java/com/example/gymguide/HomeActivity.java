@@ -99,6 +99,9 @@ public class HomeActivity extends Fragment{
         monthText.setText(monthCaps);
         yearText.setText(year.format(d));
         ImageButton T = (ImageButton) rootView.findViewById(R.id.qrcode_button);
+
+        final List<Exercise> wh = new ArrayList<>();
+
         T.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -112,42 +115,35 @@ public class HomeActivity extends Fragment{
         finishWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful() && task != null) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        String s = document.getId();
-                                        currWorkout.add(s);
 
+                    for (Exercise ex : wh) {
+                        currWorkout.add(ex.getExerciseID());
+                    }
+
+                    Date d = new Date();
+                    SimpleDateFormat day = new SimpleDateFormat("dd");
+                    SimpleDateFormat year = new SimpleDateFormat("yyyy");
+                    SimpleDateFormat month = new SimpleDateFormat("MM");
+                    String today = month.format(d) + day.format(d) + year.format(d);
+
+                    WorkoutHistory curr = new WorkoutHistory(" ", new Timestamp(new Date()),
+                            currWorkout, auth.getUid());
+
+                    db.collection("workoutHistory").document(auth.getUid()).collection("History")
+                            .document(today).set(curr);
+
+                    db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot doc : task.getResult()) {
+                                            db.collection("workoutHistory").document(auth.getUid()).
+                                                    collection("CurrentWorkout").document(doc.getId()).delete();
+                                        }
                                     }
-
-                                    Date d = new Date();
-                                    SimpleDateFormat day = new SimpleDateFormat("dd");
-                                    SimpleDateFormat year = new SimpleDateFormat("yyyy");
-                                    SimpleDateFormat month = new SimpleDateFormat("MM");
-                                    String today = month.format(d) + day.format(d) + year.format(d);
-
-                                    WorkoutHistory curr = new WorkoutHistory(" ", new Timestamp(new Date()),
-                                            currWorkout, auth.getUid());
-                                    db.collection("workoutHistory").document(auth.getUid()).collection("History")
-                                            .document(today).set(curr);
-                                    db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").get()
-                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                    if (task.isSuccessful()) {
-                                                        for (QueryDocumentSnapshot doc : task.getResult()) {
-                                                            db.collection("workoutHistory").document(auth.getUid()).
-                                                                    collection("CurrentWorkout").document(doc.getId()).delete();
-                                                        }
-                                                    }
-                                                }
-                                            });
                                 }
-                            }
-                        });
+                            });
 
                 Toast.makeText(getActivity(), "Added this workout to your history", Toast.LENGTH_SHORT).show();
 
@@ -157,14 +153,16 @@ public class HomeActivity extends Fragment{
         if(auth.getCurrentUser() != null) {
             final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
             compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-            final List<Exercise> wh = new ArrayList<>();
-            db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout").get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+            db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful() && task != null) {
+                        public void onEvent(@Nullable QuerySnapshot value,
+                                            @Nullable FirebaseFirestoreException e) {
+                            wh.clear();
+                            if (value != null) {
 //                                final List<Exercise> userCompExcerciseList = new ArrayList<>();
-                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                for (QueryDocumentSnapshot document : value) {
                                     String s = document.getId();
                                     DocumentReference docRef = db.collection("exercise").document(s);
                                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -180,12 +178,13 @@ public class HomeActivity extends Fragment{
                                                     e.setExerciseID(doc.getId());
                                                     wh.add(e);
                                                 }
-                                                compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), wh);
-                                                compWorkoutsRV.setAdapter(compWorkoutsAdapter);
+
                                             }
                                         }
                                     });
                                 }
+                                compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), wh);
+                                compWorkoutsRV.setAdapter(compWorkoutsAdapter);
                             }
                         }
                     });
