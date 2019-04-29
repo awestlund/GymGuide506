@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.gymguide.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -102,6 +104,9 @@ public class HomeActivity extends Fragment{
 
         final List<Exercise> wh = new ArrayList<>();
 
+        final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
+        compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
         T.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -139,7 +144,20 @@ public class HomeActivity extends Fragment{
                                     if (task.isSuccessful()) {
                                         for (QueryDocumentSnapshot doc : task.getResult()) {
                                             db.collection("workoutHistory").document(auth.getUid()).
-                                                    collection("CurrentWorkout").document(doc.getId()).delete();
+                                                    collection("CurrentWorkout").document(doc.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    wh.clear();
+                                                    compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), wh);
+                                                    compWorkoutsRV.setAdapter(compWorkoutsAdapter);
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w("ERROR", "Error deleting document", e);
+                                                }
+                                            });
                                         }
                                     }
                                 }
@@ -151,8 +169,6 @@ public class HomeActivity extends Fragment{
         });
 
         if(auth.getCurrentUser() != null) {
-            final RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
-            compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
             db.collection("workoutHistory").document(auth.getUid()).collection("CurrentWorkout")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -177,15 +193,18 @@ public class HomeActivity extends Fragment{
                                                     e = doc.toObject(Exercise.class);
                                                     e.setExerciseID(doc.getId());
                                                     wh.add(e);
+                                                    compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), wh);
+                                                    compWorkoutsRV.setAdapter(compWorkoutsAdapter);
                                                 }
 
                                             }
                                         }
                                     });
                                 }
-                                compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), wh);
-                                compWorkoutsRV.setAdapter(compWorkoutsAdapter);
+
                             }
+                            compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), wh);
+                            compWorkoutsRV.setAdapter(compWorkoutsAdapter);
                         }
                     });
 
@@ -216,8 +235,8 @@ public class HomeActivity extends Fragment{
                     });
         }
         else{
-            RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
-            compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            //RecyclerView compWorkoutsRV = (RecyclerView) rootView.findViewById(R.id.completed_workouts_recyclerview);
+            //compWorkoutsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
             List<Exercise> compExcerciseList = new ArrayList<>();
             compWorkoutsAdapter = new CompletedWorkoutsView(getContext(), compExcerciseList);
             compWorkoutsRV.setAdapter(compWorkoutsAdapter);
